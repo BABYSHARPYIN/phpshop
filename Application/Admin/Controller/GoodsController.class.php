@@ -151,9 +151,14 @@ class GoodsController extends Controller
 		//	'data' => $data['data'],
 		//	'page' => $data['page'],
 		//));
+
+			//取出所有的分类数据传入页面
+			$model = D('Category');
+			$catData = $model->getTree();
 		
 		// 设置页面信息
 		$this->assign(array(
+			'catData'=>$catData,
 			'_page_title' => '商品列表',
 			'_page_btn_name' => '添加新商品',
 			'_page_btn_link' => U('add'),

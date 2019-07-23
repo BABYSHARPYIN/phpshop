@@ -194,7 +194,17 @@ class GoodsModel extends Model
 		$brandId = I('get.brand_id');
 		if($brandId)
 			$where['a.brand_id'] = array('eq', $brandId);
-		
+		//主分类的搜索
+		$catId=I('get.cat_id');
+		if($catId){
+			//先取出所有子分类的ID
+			$catModel=D('category');
+			$children=$catModel->getChildren($catId);
+			//和子分类放在一起
+			$children[]=$catId;
+			//搜索出所有这些分类下的商品
+			$where['a.cat_id'] = array('IN',$children);//a.cat_id在children数组中就取出
+		}
 		
 		/*************** 翻页 ****************/
 		// 取出总的记录数
@@ -229,9 +239,10 @@ class GoodsModel extends Model
 		 * SELECT a.*,b.brand_name FROM p39_goods a LEFT JOIN p39_brand b ON a.brand_id=b.id
 		 */
 		$data = $this->order("$orderby $orderway")                    // 排序
-		->field('a.*,b.brand_name')
+		->field('a.*,b.brand_name,c.cat_name')
 		->alias('a')
-		->join('LEFT JOIN __BRAND__ b ON a.brand_id=b.id')
+		->join('LEFT JOIN __BRAND__ b ON a.brand_id=b.id
+						LEFT JOIN __CATEGORY__ c ON a.cat_id = c.id')
 		->where($where)                                               // 搜索
 		->limit($pageObj->firstRow.','.$pageObj->listRows)            // 翻页
 		->select();
