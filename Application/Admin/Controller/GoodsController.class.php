@@ -24,6 +24,7 @@ class GoodsController extends Controller
 			set_time_limit(0);
 			//var_dump($pics);
 			$model = D('goods');
+			
 			// 2. CREATE方法：a. 接收数据并保存到模型中 b.根据模型中定义的规则验证表单
 			/**
 			 * 第一个参数：要接收的数据默认是$_POST
@@ -50,9 +51,12 @@ class GoodsController extends Controller
 		// 取出所有的会员级别
 		$mlModel = D('member_level');
 		$mlData = $mlModel->select();
-		
+		//取出所有的分类数据传入页面
+		$model = D('Category');
+		$catData = $model->getTree();
 		// 设置页面信息
 		$this->assign(array(
+			'catData' => $catData,
 			'mlData' => $mlData,
 			'_page_title' => '添加新商品',
 			'_page_btn_name' => '商品列表',
@@ -109,8 +113,13 @@ class GoodsController extends Controller
 			'goods_id' => array('eq', $id),
 		))->select();
 		
+		//取出所有的分类数据传入页面
+		$model = D('Category');
+		$catData = $model->getTree();
+
 		// 设置页面信息
 		$this->assign(array(
+			'catData'=>$catData,
 			'mlData' => $mlData,
 			'mpData' => $_mpData,
 			'gpData' => $gpData,
