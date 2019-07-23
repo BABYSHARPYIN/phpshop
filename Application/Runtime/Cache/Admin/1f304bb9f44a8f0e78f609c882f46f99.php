@@ -22,24 +22,24 @@
     <!--  内容  -->
     
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Brand/add.html" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/MemberLevel/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">品牌名称：</td>
+                <td class="label">级别名称：</td>
                 <td>
-                    <input  type="text" name="brand_name" value="" />
+                    <input  type="text" name="level_name" value="" />
                 </td>
             </tr>
             <tr>
-                <td class="label">官方网址：</td>
+                <td class="label">积分下限：</td>
                 <td>
-                    <input  type="text" name="site_url" value="" />
+                    <input  type="text" name="jifen_bottom" value="" />
                 </td>
             </tr>
             <tr>
-                <td class="label">品牌Logo：</td>
+                <td class="label">积分上限：</td>
                 <td>
-                	<input type="file" name="logo" /> 
+                    <input  type="text" name="jifen_top" value="" />
                 </td>
             </tr>
             <tr>

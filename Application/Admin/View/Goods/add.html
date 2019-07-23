@@ -1,32 +1,38 @@
 <layout name="layout" />
 <style>
-#ul_pic_list li{margin:5px;list-style-type:none;}
+    #ul_pic_list li {
+        margin: 5px;
+        list-style-type: none;
+    }
 </style>
 
 <div class="tab-div">
     <div id="tabbar-div">
         <p>
+            <!--tab-front 选中状态 -->
             <span class="tab-front">通用信息</span>
+            <!--tab-back 未选中状态 -->
             <span class="tab-back">商品描述</span>
             <span class="tab-back">会员价格</span>
+
             <span class="tab-back">商品属性</span>
             <span class="tab-back">商品相册</span>
         </p>
     </div>
     <div id="tabbody-div">
         <form enctype="multipart/form-data" action="__SELF__" method="post">
-        	<!-- 基本信息 -->
+            <!-- 基本信息 -->
             <table width="90%" class="tab_table" align="center">
-            	<tr>
+                <tr>
                     <td class="label">所在品牌：</td>
                     <td>
-                    <?php buildSelect('brand', 'brand_id', 'id', 'brand_name'); ?>
+                        <?php buildSelect('brand', 'brand_id', 'id', 'brand_name'); ?>
                     </td>
                 </tr>
                 <tr>
                     <td class="label">商品名称：</td>
                     <td><input type="text" name="goods_name" size="60" />
-                    <span class="require-field">*</span></td>
+                        <span class="require-field">*</span></td>
                 </tr>
                 <tr>
                     <td class="label">LOGO：</td>
@@ -42,10 +48,11 @@
                 <tr>
                     <td class="label">本店售价：</td>
                     <td>
-                        <input type="text" name="shop_price" value="0" size="20"/>
+                        <input type="text" name="shop_price" value="0" size="20" />
                         <span class="require-field">*</span>
                     </td>
                 </tr>
+
                 <tr>
                     <td class="label">是否上架：</td>
                     <td>
@@ -56,45 +63,48 @@
             </table>
             <!-- 商品描述 -->
             <table style="display:none;" width="100%" class="tab_table" align="center">
-            	<tr>
+                <tr>
                     <td>
                         <textarea id="goods_desc" name="goods_desc"></textarea>
                     </td>
                 </tr>
             </table>
             <!-- 会员价格 -->
+            <!-- display:none的意思是在第一个table中隐藏 -->
             <table style="display:none;" width="90%" class="tab_table" align="center">
-            	<tr>
+                <tr>
                     <td>
-                    	<?php foreach ($mlData as $k => $v): ?>
-	                        <p>
-	                        	<strong><?php echo $v['level_name']; ?></strong> : 
-	                    	    ￥<input type="text" name="member_price[<?php echo $v['id']; ?>]" size="8" />元 
-	                        </p>
+                        <?php foreach ($mlData as $k => $v): ?>
+                        <p>
+                            <strong><?php echo $v['level_name']; ?></strong> : ￥
+                            <input type="text" name="member_price[<?php echo $v['id']; ?>]" size="8" />元
+                        </p>
                         <?php endforeach; ?>
                     </td>
                 </tr>
             </table>
             <!-- 商品属性 -->
             <table style="display:none;" width="90%" class="tab_table" align="center">
-            	<tr><td></td></tr>
+                <tr>
+                    <td></td>
+                </tr>
             </table>
             <!-- 商品相册 -->
             <table style="display:none;" width="100%" class="tab_table" align="center">
-            	<tr>
-            	<td>
-            		<input id="btn_add_pic" type="button" value="添加一张" />
-            		<hr />
-            		<ul id="ul_pic_list"></ul>
-            	</td>
-            	</tr>
+                <tr>
+                    <td>
+                        <input id="btn_add_pic" type="button" value="添加一张" />
+                        <hr />
+                        <ul id="ul_pic_list"></ul>
+                    </td>
+                </tr>
             </table>
-            
+
             <div class="button-div">
-                <input type="submit" value=" 确定 " class="button"/>
+                <input type="submit" value=" 确定 " class="button" />
                 <input type="reset" value=" 重置 " class="button" />
             </div>
-            
+
         </form>
     </div>
 </div>
@@ -106,52 +116,29 @@
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor1_2_2-utf8-php/umeditor.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/umeditor1_2_2-utf8-php/lang/zh-cn/zh-cn.js"></script>
 <script>
-UM.getEditor('goods_desc', {
-	initialFrameWidth : "100%",
-	initialFrameHeight : 350
-});
+    UM.getEditor('goods_desc', {
+        initialFrameWidth: "100%",
+        initialFrameHeight: 350
+    });
 
-/******** 切换的代码 *******/
-$("#tabbar-div p span").click(function(){
-	// 点击的第几个按钮
-	var i = $(this).index();
-	// 先隐藏所有的table
-	$(".tab_table").hide();
-	// 显示第i个table
-	$(".tab_table").eq(i).show();
-	// 先取消原按钮的选中状态
-	$(".tab-front").removeClass("tab-front").addClass("tab-back");
-	// 设置当前按钮选中
-	$(this).removeClass("tab-back").addClass("tab-front");
-});
+    /******** 切换的代码 *******/
+    //选中tabbar-div中的p标签中的span按钮添加点击事件
+    $("#tabbar-div p span").click(function() {
+        // 点击的第几个按钮
+        var i = $(this).index();
+        // 先隐藏所有的table
+        $(".tab_table").hide();
+        // 显示第i个table
+        $(".tab_table").eq(i).show();
+        // 先取消原按钮的选中状态去除tab-front添加ab-back
+        $(".tab-front").removeClass("tab-front").addClass("tab-back");
+        // 设置当前按钮选中，去除tab-back添加tab-front
+        $(this).removeClass("tab-back").addClass("tab-front");
+    });
 
-// 添加一张
-$("#btn_add_pic").click(function(){
-	var file = '<li><input type="file" name="pic[]" /></li>';
-	$("#ul_pic_list").append(file);
-});
+    // 添加一张
+    $("#btn_add_pic").click(function() {
+        var file = '<li><input type="file" name="pic[]" /></li>';
+        $("#ul_pic_list").append(file);
+    });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

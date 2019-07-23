@@ -23,7 +23,6 @@ class GoodsController extends Controller
 		{
 			set_time_limit(0);
 			//var_dump($pics);
-			var_dump($_FILES);die;
 			$model = D('goods');
 			// 2. CREATE方法：a. 接收数据并保存到模型中 b.根据模型中定义的规则验证表单
 			/**
