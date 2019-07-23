@@ -21,25 +21,26 @@
 
     <!--  内容  -->
     
+
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Brand/add" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Category/edit/id/32.html">
+        <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">品牌名称：</td>
+                <td class="label">上级分类：</td>
                 <td>
-                    <input  type="text" name="brand_name" value="" />
+                    <select name="parent_id">
+                    	<option value="0">顶级分类</option>
+                    	<?php foreach ($catData as $k => $v): if($v['id'] == $data['id'] || in_array($v['id'], $children)) continue ; if($v['id'] == $data['parent_id']) $select = 'selected="selected"'; else $select = ''; ?>
+                    	<option <?php echo $select; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+                    	<?php endforeach; ?>
+                    </select>
                 </td>
             </tr>
             <tr>
-                <td class="label">官方网址：</td>
+                <td class="label">分类名称：</td>
                 <td>
-                    <input  type="text" name="site_url" value="" />
-                </td>
-            </tr>
-            <tr>
-                <td class="label">品牌Logo：</td>
-                <td>
-                	<input type="file" name="logo" /> 
+                    <input size="60" type="text" name="cat_name" value="<?php echo $data['cat_name']; ?>" />
                 </td>
             </tr>
             <tr>

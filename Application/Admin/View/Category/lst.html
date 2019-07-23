@@ -1,0 +1,27 @@
+<layout name="layout" />
+
+<!-- 列表 -->
+<form method="post" action="" name="listForm" onsubmit="">
+    <div class="list-div" id="listDiv">
+        <table cellpadding="3" cellspacing="1">
+            <tr>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+            <?php foreach ($data as $k => $v): ?>
+            <tr class="tron">
+                <td>
+                    <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?>
+                </td>
+                <td align="center">
+                    <a href="<?php echo U('edit?id='.$v['id']); ?>">修改</a>
+                    <a onclick="return confirm('确定要删除吗？');" href="<?php echo U('delete?id='.$v['id']); ?>">删除</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+</form>
+
+<!-- 引入行高亮显示 -->
+<script type="text/javascript" src="__PUBLIC__/Admin/Js/tron.js"></script>
