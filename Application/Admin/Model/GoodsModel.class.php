@@ -149,6 +149,42 @@ class GoodsModel extends Model
 			'goods_id' => array('eq', $id),
 		))->delete();
 	}
+	/**
+	 * 取出一个分类下所有商品的ID(既考虑主分类也考虑了扩展分类)
+	 */
+	public function getGoodsIdByCatId($catId)
+	{
+		//先取出所有在分类的id
+		$catModel = D('category');
+		$children = $catModel->getChildren($catId);
+		//和子分类放在一起
+		$children[] = $catId;
+		/**取出主分类或者扩展分类在这些分类中的商品 */
+		//取出主分类下的商品ID
+		$gids = $this->field('id')->where(array(
+			'cat_id' => array('in', $children), //主分类下的商品
+		))->select();
+
+		//取出扩展分类下的ID
+		$gcModel = D('goods_cat');
+		$gids1 = $gcModel->field('DISTINCT goods_id id')->where(array(
+			'cat_id' => array('IN', $children)
+		))->select();
+
+		//把主分类下的ID和扩展分类下的商品ID合并成一个二维数组【两个都不为空时合并，否则取出不为空的数组】
+		if ($gids && $gids1)
+			$gids = array_merge($gids, $gids1);
+		elseif ($gids1)
+			$gids = $gids1;
+
+		//二维转一维数组
+		$id = array();
+		foreach ($gids as $k => $v) {
+			if (!in_array($v['id'], $id))	//判断去重
+				$id[] = $v['id'];
+		}
+		return $id;
+	}
 
 	/**
 	 * 实现翻页、搜索、排序
@@ -191,13 +227,11 @@ class GoodsModel extends Model
 		//主分类的搜索
 		$catId = I('get.cat_id');
 		if ($catId) {
-			//先取出所有子分类的ID
-			$catModel = D('category');
-			$children = $catModel->getChildren($catId);
-			//和子分类放在一起
-			$children[] = $catId;
-			//搜索出所有这些分类下的商品
-			$where['a.cat_id'] = array('IN', $children); //a.cat_id在children数组中就取出
+			//先查询出这个分类ID下所有的商品
+			$gids =	$this->getGoodsIdByCatId($catId);
+
+			//应用到取数据的where上
+			$where['a.id'] = array('in', $gids);
 		}
 
 		/*************** 翻页 ****************/
