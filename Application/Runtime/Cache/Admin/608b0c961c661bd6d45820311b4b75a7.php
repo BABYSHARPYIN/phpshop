@@ -66,6 +66,8 @@
                 <tr>
                     <td class="label">扩展分类：<input onclick="$('#cat_list').append($('#cat_list').find('select').eq(0).clone());" type="button" id="btn_add_cat" value="添加"></td>
                     <td id="cat_list">
+                        <!-- 如果有原数据就循环输出，如果没有就默认生成一个下拉框 -->
+                        <?php if($gcData): ?>
                         <?php foreach ($gcData as $k1=>$v1): ?>
                         <select name="ext_cat_id[]">
                                         <option value="">选择分类</option>
@@ -74,6 +76,14 @@
                                         <?php endforeach; ?>
                                     </select>
                         <?php endforeach; ?>
+                        <?php else: ?>
+                        <select name="ext_cat_id[]">
+                                <option value="">选择分类</option>
+                                <?php foreach ($catData as $k => $v): ?>
+                                <option <?php echo $select; ?>value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <tr>

@@ -47,6 +47,26 @@ class GoodsModel extends Model
 	protected function _before_update(&$data, $option)
 	{
 		$id = $option['where']['id'];  // 要修改的商品的ID
+
+			/**************处理扩展分类 */
+			$ecid = I('post.ext_cat_id');
+			$gcModel = D('goods_cat');
+			//先删除原分类数据
+			$gcModel->where(array(
+				'goods_id'=>array('eq',$id),
+			))->delete();
+			if ($ecid) {
+			
+				foreach ($ecid as $k => $v) {
+					if (empty($v)) {
+						continue;
+					}
+					$gcModel->add(array(
+						'cat_id' => $v,
+						'goods_id' => $id,
+					));
+				}
+			}
 		/************ 处理相册图片 *****************/
 		if (isset($_FILES['pic'])) {
 			$pics = array();

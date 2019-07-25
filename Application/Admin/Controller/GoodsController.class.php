@@ -122,7 +122,8 @@ class GoodsController extends Controller
 		$gcData = $gcModel->field('cat_id')->where(array(
 			'goods_id' => array('eq', $id),
 		))->select();
-		var_dump($gcData);
+
+		
 		// 设置页面信息
 		$this->assign(array(
 			'catData'=>$catData,
