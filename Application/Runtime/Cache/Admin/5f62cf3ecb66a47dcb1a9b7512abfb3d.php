@@ -150,6 +150,7 @@
                         <li class="menu-item"><a href="<?php echo U('Goods/lst'); ?>" target="main-frame">商品列表</a></li>
                         <li class="menu-item"><a href="<?php echo U('Brand/lst'); ?>" target="main-frame">商品品牌</a></li>
                         <li class="menu-item"><a href="<?php echo U('Category/lst'); ?>" target="main-frame">分类列表</a></li>
+                        <li class="menu-item"><a href="<?php echo U('Type/lst'); ?>" target="main-frame">类型列表</a></li>
                     </ul>
                 </li>
                 <li class="explode" key="08_members" name="menu">
