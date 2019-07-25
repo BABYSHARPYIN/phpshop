@@ -22,7 +22,7 @@
     <!--  内容  -->
     
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Brand/add.html" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index/Admin/Brand/add" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
                 <td class="label">品牌名称：</td>

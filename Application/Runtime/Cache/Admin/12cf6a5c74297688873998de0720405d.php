@@ -86,6 +86,7 @@
             <tr>
                 <th>编号</th>
                 <th>主分类</th>
+                <th>扩展分类</th>
                 <th>品牌</th>
                 <th>商品名称</th>
                 <th>logo</th>
@@ -102,6 +103,9 @@
                 </td>
                 <td align="center">
                     <?php echo $v['cat_name']; ?>
+                </td>
+                <td align="center">
+                    <?php echo $v['ext_cat_name']; ?>
                 </td>
                 <td align="center">
                     <?php echo $v['brand_name']; ?>

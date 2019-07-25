@@ -21,7 +21,7 @@ class GoodsController extends Controller
    		// 判断用户是否提交了表单
 		if(IS_POST)
 		{
-			set_time_limit(0);
+			//set_time_limit(0);
 			//var_dump($pics);
 			$model = D('goods');
 			
