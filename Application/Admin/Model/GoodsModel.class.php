@@ -126,6 +126,11 @@ class GoodsModel extends Model
 	protected function _before_delete($option)
 	{
 		$id = $option['where']['id'];   // 要删除的商品的ID
+			/************* 删除扩展分类 ******************/
+			$gcModel = D('goods_cat');
+			$gcModel->where(array(
+				'goods_id' => array('eq', $id),
+			))->delete();
 		/************** 删除相册中的图片 ********************/
 		// 先从相册表中取出相册所在硬盘的路径
 		$gpModel = D('goods_pic');

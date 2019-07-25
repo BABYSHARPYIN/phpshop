@@ -47,7 +47,7 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/edit/id/21.html" method="post">
+        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/edit/id/36.html" method="post">
             <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
             <!-- 基本信息 -->
             <table width="90%" class="tab_table" align="center">
@@ -61,6 +61,19 @@
                                 <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
                             <?php endforeach; ?>
                         </select> <span class="require-field">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">扩展分类：<input onclick="$('#cat_list').append($('#cat_list').find('select').eq(0).clone());" type="button" id="btn_add_cat" value="添加"></td>
+                    <td id="cat_list">
+                        <?php foreach ($gcData as $k1=>$v1): ?>
+                        <select name="ext_cat_id[]">
+                                        <option value="">选择分类</option>
+                                        <?php foreach ($catData as $k => $v): if($v['id']==$v1['cat_id']) { $select = 'selected="selected"'; }else { $select = ''; } ?>
+                                        <option <?php echo $select; ?>value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                        <?php endforeach; ?>
                     </td>
                 </tr>
                 <tr>

@@ -114,15 +114,22 @@ class GoodsController extends Controller
 		))->select();
 		
 		//取出所有的分类数据传入页面
-		$model = D('Category');
+		$model = D('category');
 		$catData = $model->getTree();
 
+		//取出扩展分类
+		$gcModel = D('goods_cat');
+		$gcData = $gcModel->field('cat_id')->where(array(
+			'goods_id' => array('eq', $id),
+		))->select();
+		var_dump($gcData);
 		// 设置页面信息
 		$this->assign(array(
 			'catData'=>$catData,
 			'mlData' => $mlData,
 			'mpData' => $_mpData,
 			'gpData' => $gpData,
+			'gcData' => $gcData,
 			'_page_title' => '修改商品',
 			'_page_btn_name' => '商品列表',
 			'_page_btn_link' => U('lst'),
