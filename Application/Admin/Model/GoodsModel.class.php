@@ -7,9 +7,9 @@ use Think\Model;
 class GoodsModel extends Model
 {
 	// 添加时调用create方法允许接收的字段
-	protected $insertFields = 'cat_id,goods_name,market_price,shop_price,is_on_sale,goods_desc,brand_id';
+	protected $insertFields = 'cat_id,goods_name,market_price,shop_price,is_on_sale,goods_desc,brand_id,type_id';
 	// 修改时调用create方法允许接收的字段
-	protected $updateFields = 'cat_id,id,goods_name,market_price,shop_price,is_on_sale,goods_desc,brand_id';
+	protected $updateFields = 'cat_id,id,goods_name,market_price,shop_price,is_on_sale,goods_desc,brand_id,type_id';
 	//定义验证规则
 	protected $_validate = array(
 		array('cat_id', 'require', '必须选择一个主分类！', 1),
@@ -145,7 +145,13 @@ class GoodsModel extends Model
 
 	protected function _before_delete($option)
 	{
+		
 		$id = $option['where']['id'];   // 要删除的商品的ID
+			/************* 删除商品属性 ******************/
+			$gcModel = D('goods_attr');
+			$gcModel->where(array(
+				'goods_id' => array('eq', $id),
+			))->delete();
 			/************* 删除扩展分类 ******************/
 			$gcModel = D('goods_cat');
 			$gcModel->where(array(
@@ -313,6 +319,23 @@ class GoodsModel extends Model
 	 */
 	protected function _after_insert($data, $option)
 	{
+		
+		/**处理商品属性的代码 */
+		$attrValue = I('post.attr_value');
+		$gaModel = D('goods_attr');
+		foreach($attrValue as $k => $v)
+		{
+			//把属性值得数组去重
+			$v=array_unique($v);
+			foreach($v as $k1 => $v1)
+			{
+				$gaModel->add(array(
+					'goods_id' => $data['id'],
+					'attr_id' => $k,
+					'attr_value' => $v1,
+				));	
+			}
+		}
 		/**************处理扩展分类 */
 		$ecid = I('post.ext_cat_id');
 		if ($ecid) {

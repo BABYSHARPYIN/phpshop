@@ -22,7 +22,7 @@
     <!--  内容  -->
     
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Attribute/add.html" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Attribute/add/type_id/1.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
                 <td class="label">属性名称：</td>
