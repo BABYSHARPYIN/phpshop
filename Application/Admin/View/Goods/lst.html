@@ -3,27 +3,23 @@
 <!-- 搜索表单 -->
 <div class="form-div">
     <form action="__ACTION__" method="GET" name="searchForm">
-        <P>
+        <p>
             分　　类：
-            <?php $catId=I('get.cat_id');?>
-            <tr>
-                <td>
-                    <select name="cat_id">
-                        <option value="">选择分类</option>
-                        <?php foreach ($catData as $k => $v): 
-                                        if($v['id']==$catId)
-                                            $select='selected="selected"';
-                                        else
-                                            $select='';
-        
-                                        ?>
-                        <option <?php echo $select; ?> value="<?php echo $v['id']; ?>">
-                            <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                        <?php endforeach;?>
-                    </select>
-                </td>
-            </tr>
-        </P>
+            <?php 
+		    			// 接收 当前搜索的分类ID
+		    			$catId = I('get.cat_id'); ?>
+            <select name="cat_id">
+	                    	<option value="">选择分类</option>
+	                    	<?php foreach ($catData as $k => $v): 
+	                    			if($v['id'] == $catId)
+	                    				$select = 'selected="selected"';
+	                    			else 
+	                    				$select = '';
+	                    	?>
+	                    	<option <?php echo $select; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+	                    	<?php endforeach; ?>
+	                    </select>
+        </p>
         <P>
             品　　牌：
             <?php buildSelect('brand', 'brand_id', 'id', 'brand_name', I('get.brand_id')); ?>
@@ -111,6 +107,7 @@
                     <?php echo $v['addtime']; ?>
                 </td>
                 <td align="center">
+                    <a href="<?php echo U('goods_number?id='.$v['id']); ?>">库存量</a>
                     <a href="<?php echo U('edit?id='.$v['id']); ?>">修改</a>
                     <a onclick="return confirm('确定要删除吗？');" href="<?php echo U('delete?id='.$v['id']); ?>">删除</a>
                 </td>
@@ -137,8 +134,7 @@
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/datepicker-zh_cn.js"></script>
 <link rel="stylesheet" media="all" type="text/css" href="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.css" />
 <script type="text/javascript" src="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js">
-</script>
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
 <script>
     // 添加时间插件
     $.timepicker.setDefaults($.timepicker.regional['zh-CN']); // 设置使用中文 

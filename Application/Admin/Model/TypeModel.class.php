@@ -36,11 +36,10 @@ class TypeModel extends Model
 	// 删除前
 	protected function _before_delete($option)
 	{
-		if(is_array($option['where']['id']))
-		{
-			$this->error = '不支持批量删除';
-			return FALSE;
-		}
+		$attrModel = D('Arrtibute');
+		$attrModel->where(array(
+			'type_id' => array('eq',$option['where']['id']),
+		))->delete();
 	}
 	/************************************ 其他方法 ********************************************/
 }

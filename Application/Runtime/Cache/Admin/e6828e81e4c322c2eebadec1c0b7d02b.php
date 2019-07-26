@@ -21,32 +21,15 @@
 
     <!--  内容  -->
     
+
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Attribute/add.html" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Type/edit/id/1.html" enctype="multipart/form-data" >
+    	<input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">属性名称：</td>
+                <td class="label">类型名称：</td>
                 <td>
-                    <input type="text" name="attr_name" value="" />
-                </td>
-            </tr>
-            <tr>
-                <td class="label">属性类型：</td>
-                <td>
-                    <input type="radio" name="attr_type" value="唯一" checked="checked" />唯一
-                    <input type="radio" name="attr_type" value="可选" />可选
-                </td>
-            </tr>
-            <tr>
-                <td class="label">属性可选值：</td>
-                <td>
-                    <textarea rows="6" cols="60" name="attr_option_values"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td class="label">所属类型：</td>
-                <td>
-                    <?php buildSelect('Type', 'type_id', 'id', 'type_name', I('get.type_id')); ?>
+                    <input  type="text" name="type_name" value="<?php echo $data['type_name']; ?>" />
                 </td>
             </tr>
             <tr>

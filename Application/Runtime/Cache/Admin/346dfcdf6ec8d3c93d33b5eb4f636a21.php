@@ -26,17 +26,23 @@
         margin: 5px;
         list-style-type: none;
     }
+    
+    #cat_list {
+        background: #EEE;
+        margin: 0;
+    }
+    
+    #cat_list li {
+        margin: 5px;
+    }
 </style>
 
 <div class="tab-div">
     <div id="tabbar-div">
         <p>
-            <!--tab-front 选中状态 -->
             <span class="tab-front">通用信息</span>
-            <!--tab-back 未选中状态 -->
             <span class="tab-back">商品描述</span>
             <span class="tab-back">会员价格</span>
-
             <span class="tab-back">商品属性</span>
             <span class="tab-back">商品相册</span>
         </p>
@@ -49,22 +55,27 @@
                     <td class="label">主分类：</td>
                     <td>
                         <select name="cat_id">
-                                    <option value="">选择分类</option>
-                                    <?php foreach ($catData as $k => $v): ?>
-                                    <option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select> <span class="require-field">*</span>
+	                    	<option value="">选择分类</option>
+	                    	<?php foreach ($catData as $k => $v): ?>
+	                    	<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+	                    	<?php endforeach; ?>
+	                    </select>
+                        <span class="require-field">*</span>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">扩展分类：<input onclick="$('#cat_list').append($('#cat_list').find('select').eq(0).clone());" type="button" id="btn_add_cat" value="添加"></td>
-                    <td id="cat_list">
-                        <select name="ext_cat_id[]">
-                                        <option value="">选择分类</option>
-                                        <?php foreach ($catData as $k => $v): ?>
-                                        <option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                    <td class="label">扩展分类：<input onclick="$('#cat_list').append($('#cat_list').find('li').eq(0).clone());" type="button" id="btn_add_cat" value="添加一个" /></td>
+                    <td>
+                        <ul id="cat_list">
+                            <li>
+                                <select name="ext_cat_id[]">
+			                    	<option value="">选择分类</option>
+			                    	<?php foreach ($catData as $k => $v): ?>
+			                    	<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+			                    	<?php endforeach; ?>
+			                    </select>
+                            </li>
+                        </ul>
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +107,6 @@
                         <span class="require-field">*</span>
                     </td>
                 </tr>
-
                 <tr>
                     <td class="label">是否上架：</td>
                     <td>
@@ -114,7 +124,6 @@
                 </tr>
             </table>
             <!-- 会员价格 -->
-            <!-- display:none的意思是在第一个table中隐藏 -->
             <table style="display:none;" width="90%" class="tab_table" align="center">
                 <tr>
                     <td>
@@ -130,7 +139,15 @@
             <!-- 商品属性 -->
             <table style="display:none;" width="90%" class="tab_table" align="center">
                 <tr>
-                    <td></td>
+                    <td>
+                        商品类型：
+                        <?php buildSelect('Type', 'type_id', 'id', 'type_name'); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul id="attr_list"></ul>
+                    </td>
                 </tr>
             </table>
             <!-- 商品相册 -->
@@ -166,7 +183,6 @@
     });
 
     /******** 切换的代码 *******/
-    //选中tabbar-div中的p标签中的span按钮添加点击事件
     $("#tabbar-div p span").click(function() {
         // 点击的第几个按钮
         var i = $(this).index();
@@ -174,9 +190,9 @@
         $(".tab_table").hide();
         // 显示第i个table
         $(".tab_table").eq(i).show();
-        // 先取消原按钮的选中状态去除tab-front添加ab-back
+        // 先取消原按钮的选中状态
         $(".tab-front").removeClass("tab-front").addClass("tab-back");
-        // 设置当前按钮选中，去除tab-back添加tab-front
+        // 设置当前按钮选中
         $(this).removeClass("tab-back").addClass("tab-front");
     });
 
@@ -185,6 +201,69 @@
         var file = '<li><input type="file" name="pic[]" /></li>';
         $("#ul_pic_list").append(file);
     });
+
+    // 选择类型获取属性的AJAX
+    $("select[name=type_id]").change(function() {
+        // 获取当前选中的类型的id
+        var typeId = $(this).val();
+        // 如果选择了一个类型就执行AJAX取属性
+        if (typeId > 0) {
+            // 根据类型ID执行AJAX取出这个类型下的属性，并获取返回的JSON数据
+            $.ajax({
+                type: "GET",
+                url: "<?php echo U('ajaxGetAttr', '', FALSE); ?>/type_id/" + typeId,
+                dataType: "json",
+                success: function(data) {
+                    /** 把服务器返回的属性循环拼成一个LI字符串，并显示在页面中 **/
+                    var li = "";
+                    // 循环每个属性
+                    $(data).each(function(k, v) {
+                        li += '<li>';
+                        // 如果这个属性类型是可选的就有一个+
+                        if (v.attr_type == '可选')
+                            li += '<a onclick="addNewAttr(this);" href="#">[+]</a>';
+                        // 属性名称
+                        li += v.attr_name + ' : ';
+                        // 如果属性有可选值就做下拉框，否则做文本框
+                        if (v.attr_option_values == "")
+                            li += '<input type="text" name="attr_value[' + v.id + '][]" />';
+                        else {
+                            li += '<select name="attr_value[' + v.id + '][]"><option value="">请选择...</option>';
+                            // 把可选值根据,转化成数组
+                            var _attr = v.attr_option_values.split(',');
+                            // 循环每个值制作option
+                            for (var i = 0; i < _attr.length; i++) {
+                                li += '<option value="' + _attr[i] + '">';
+                                li += _attr[i];
+                                li += '</option>';
+                            }
+                            li += '</select>';
+                        }
+
+                        li += '</li>'
+                    });
+                    // 把拼好的LI放到 页面中
+                    $("#attr_list").html(li);
+                }
+            });
+        } else
+            $("#attr_list").html(""); // 如果选的是请 选择就直接清空
+    });
+
+    // 点击属性的+号
+    function addNewAttr(a) {
+        // $(a)  --> 把a转换成jquery中的对象，然后才能调用jquery中的方法
+        // 先获取所在的li
+        var li = $(a).parent();
+        if ($(a).text() == '[+]') {
+            var newLi = li.clone();
+            // +变-
+            newLi.find("a").text('[-]');
+            // 新的放在li后面
+            li.after(newLi);
+        } else
+            li.remove();
+    }
 </script>
 
     <div id="footer"> 共执行 29 个查询，用时 0.539249 秒，Gzip 已禁用，内存占用 3.502 MB 版权所有 © 2005-2021 yinruizuishuai@gmail.com，并保留所有权利。</div>

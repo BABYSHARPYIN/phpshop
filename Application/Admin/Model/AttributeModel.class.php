@@ -39,8 +39,8 @@ class AttributeModel extends Model
 	// 添加前
 	protected function _before_insert(&$data, $option)
 	{
-		//把中文逗号换成英文的
-		$data['attr_option_values'] = str_replace('，',',',$data['attr_option_values']);
+		// 把中文 逗号换成英文的
+		$data['attr_option_values'] = str_replace('，', ',', $data['attr_option_values']);
 	}
 	// 修改前
 	protected function _before_update(&$data, $option)

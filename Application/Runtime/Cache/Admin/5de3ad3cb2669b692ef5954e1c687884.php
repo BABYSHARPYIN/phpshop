@@ -23,7 +23,7 @@
     
 
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Attribute/edit/id/1/p/1.html" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Attribute/edit/id/1/type_id/1.html" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
@@ -48,7 +48,7 @@
             <tr>
                 <td class="label">所属类型：</td>
                 <td>
-                    <?php buildSelect('Type','type_id','id','type_name',I('get.type_id')); ?>
+                    <?php buildSelect('Type', 'type_id', 'id', 'type_name', I('get.type_id')); ?>
                 </td>
             </tr>
             <tr>

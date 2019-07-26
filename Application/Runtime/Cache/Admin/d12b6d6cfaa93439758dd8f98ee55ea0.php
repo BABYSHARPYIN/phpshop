@@ -37,8 +37,7 @@
         </p>
         <p>
             所属类型：
-            <?php buildSelect('Type','type_id','id','type_name',I('get.type_id')); ?>
-
+            <?php buildSelect('Type', 'type_id', 'id', 'type_name', I('get.type_id')); ?>
         </p>
         <p><input type="submit" value=" 搜索 " class="button" /></p>
     </form>
