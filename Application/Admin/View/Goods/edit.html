@@ -140,7 +140,51 @@
             <!-- 商品属性 -->
             <table style="display:none;" width="90%" class="tab_table" align="center">
                 <tr>
-                    <td></td>
+                    <td>
+                        商品类型：
+                        <?php buildSelect('Type', 'type_id', 'id', 'type_name',$data['type_id']); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul id="attr_list">
+                            <!-- 循环所有原属性值 -->
+                            <?php 
+                            $attrId = array();
+                            foreach($gaData as $k => $v): 
+                                    
+                                    if( in_array($v['attr_id'],attrId))
+                                        $opt='-';
+                                    else
+                                    {
+                                        $opt='+';
+                                        $attrId[]=$v['attr_id'];
+                                    }
+                            ?>
+                            <li>
+                                <?php if($v['attr_type']=='可选'): ?>
+                                <a onclick="addNewAttr(this);" href="#">[<?php echo $opt;?>]</a>
+                                <?php endif; ?>
+                                <?php echo $v['attr_name']; ?>:
+                                <?php if($v['attr_option_values']): ?>
+                                <select name="" id="">
+                                    <option value="">请选择</option>
+                                    <?php foreach($attr as $k1 => $v1): 
+                                            if($v1 == $v['attr_value'])
+                                                $select = 'selected="selected"';
+                                            else
+                                                $select = '';
+                                    ?>
+                                        <option <?php echo $select; ?>value="<?php echo $v1; ?>"><?php echo $v1; ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                                <?php else: ?>
+                                <input type="text" value="<?php echo $v['attr_value']; ?>" />
+                                <?php endif; ?>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </td>
                 </tr>
             </table>
             <!-- 商品相册 -->
@@ -227,4 +271,67 @@
             });
         }
     });
+
+    // 选择类型获取属性的AJAX
+    $("select[name=type_id]").change(function() {
+        // 获取当前选中的类型的id
+        var typeId = $(this).val();
+        // 如果选择了一个类型就执行AJAX取属性
+        if (typeId > 0) {
+            // 根据类型ID执行AJAX取出这个类型下的属性，并获取返回的JSON数据
+            $.ajax({
+                type: "GET",
+                url: "<?php echo U('ajaxGetAttr', '', FALSE); ?>/type_id/" + typeId,
+                dataType: "json",
+                success: function(data) {
+                    /** 把服务器返回的属性循环拼成一个LI字符串，并显示在页面中 **/
+                    var li = "";
+                    // 循环每个属性
+                    $(data).each(function(k, v) {
+                        li += '<li>';
+                        // 如果这个属性类型是可选的就有一个+
+                        if (v.attr_type == '可选')
+                            li += '<a onclick="addNewAttr(this);" href="#">[+]</a>';
+                        // 属性名称
+                        li += v.attr_name + ' : ';
+                        // 如果属性有可选值就做下拉框，否则做文本框
+                        if (v.attr_option_values == "")
+                            li += '<input type="text" name="attr_value[' + v.id + '][]" />';
+                        else {
+                            li += '<select name="attr_value[' + v.id + '][]"><option value="">请选择...</option>';
+                            // 把可选值根据,转化成数组
+                            var _attr = v.attr_option_values.split(',');
+                            // 循环每个值制作option
+                            for (var i = 0; i < _attr.length; i++) {
+                                li += '<option value="' + _attr[i] + '">';
+                                li += _attr[i];
+                                li += '</option>';
+                            }
+                            li += '</select>';
+                        }
+
+                        li += '</li>'
+                    });
+                    // 把拼好的LI放到 页面中
+                    $("#attr_list").html(li);
+                }
+            });
+        } else
+            $("#attr_list").html(""); // 如果选的是请 选择就直接清空
+    });
+
+    // 点击属性的+号
+    function addNewAttr(a) {
+        // $(a)  --> 把a转换成jquery中的对象，然后才能调用jquery中的方法
+        // 先获取所在的li
+        var li = $(a).parent();
+        if ($(a).text() == '[+]') {
+            var newLi = li.clone();
+            // +变-
+            newLi.find("a").text('[-]');
+            // 新的放在li后面
+            li.after(newLi);
+        } else
+            li.remove();
+    }
 </script>

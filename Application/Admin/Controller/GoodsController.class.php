@@ -134,8 +134,16 @@ class GoodsController extends Controller
 		$gcData = $gcModel->field('cat_id')->where(array(
 			'goods_id' => array('eq', $id),
 		))->select();
-
 		
+		//取出这件商品已经设置了的属性值
+		$gaModel = D('goods_attr');
+		$gaData=$gaModel->alias('a')
+		->field('a.*,b.attr_name,b.attr_type,b.attr_option_values')
+		->join('LEFT JOIN __ATTRIBUTE__ b ON a.attr_id = b.id')
+		->where(array(
+			'a.goods_id'=>array('eq',$id),
+		))->select();
+		// var_dump($gaData);
 		// 设置页面信息
 		$this->assign(array(
 			'catData'=>$catData,
@@ -143,6 +151,7 @@ class GoodsController extends Controller
 			'mpData' => $_mpData,
 			'gpData' => $gpData,
 			'gcData' => $gcData,
+			'gaData'=>$gaData,
 			'_page_title' => '修改商品',
 			'_page_btn_name' => '商品列表',
 			'_page_btn_link' => U('lst'),
