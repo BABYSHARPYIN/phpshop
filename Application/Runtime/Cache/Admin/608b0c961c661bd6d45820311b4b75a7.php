@@ -34,6 +34,15 @@
         margin: 5px;
         list-style-type: none;
     }
+    
+    #cat_list {
+        background: #EEE;
+        margin: 0;
+    }
+    
+    #cat_list li {
+        margin: 5px;
+    }
 </style>
 
 <div class="tab-div">
@@ -55,35 +64,42 @@
                     <td class="label">主分类：</td>
                     <td>
                         <select name="cat_id">
-                            <option value="">选择分类</option>
-                            <?php foreach ($catData as $k => $v): if($v['id'] == $data['cat_id']) $select='selected="selected"'; else $select=''; ?>
-                            <option <?php echo $select; ?>value="<?php echo $v['id']; ?>">
-                                <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                            <?php endforeach; ?>
-                        </select> <span class="require-field">*</span>
+	                    	<option value="">选择分类</option>
+	                    	<?php foreach ($catData as $k => $v): if($v['id'] == $data['cat_id']) $select = 'selected="selected"'; else $select = ''; ?>
+	                    	<option <?php echo $select; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+	                    	<?php endforeach; ?>
+	                    </select>
+                        <span class="require-field">*</span>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">扩展分类：<input onclick="$('#cat_list').append($('#cat_list').find('select').eq(0).clone());" type="button" id="btn_add_cat" value="添加"></td>
-                    <td id="cat_list">
-                        <!-- 如果有原数据就循环输出，如果没有就默认生成一个下拉框 -->
-                        <?php if($gcData): ?>
-                        <?php foreach ($gcData as $k1=>$v1): ?>
-                        <select name="ext_cat_id[]">
-                                        <option value="">选择分类</option>
-                                        <?php foreach ($catData as $k => $v): if($v['id']==$v1['cat_id']) { $select = 'selected="selected"'; }else { $select = ''; } ?>
-                                        <option <?php echo $select; ?>value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                        <select name="ext_cat_id[]">
-                                <option value="">选择分类</option>
-                                <?php foreach ($catData as $k => $v): ?>
-                                <option <?php echo $select; ?>value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif; ?>
+                    <td class="label">扩展分类：<input onclick="var s = $('#cat_list').find('li').eq(0).clone();s.find('option:selected').removeAttr('selected');$('#cat_list').append(s);" type="button" id="btn_add_cat" value="添加一个" /></td>
+                    <td>
+                        <ul id="cat_list">
+                            <!-- 如果有原分类就循环输出，否则默认输出一个下拉框 -->
+                            <?php if($gcData): ?>
+                            <?php foreach ($gcData as $k1 => $v1): ?>
+                            <li>
+                                <select name="ext_cat_id[]">
+				                    	<option value="">选择分类</option>
+				                    	<?php foreach ($catData as $k => $v): if($v['id'] == $v1['cat_id']) $select = 'selected="selected"'; else $select = ''; ?>
+				                    	<option <?php echo $select; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+				                    	<?php endforeach; ?>
+				                    </select>
+                            </li>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <li>
+                                <select name="ext_cat_id[]">
+				                    	<option value="">选择分类</option>
+				                    	<?php foreach ($catData as $k => $v): ?>
+				                    	<option <?php echo $select; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+				                    	<?php endforeach; ?>
+				                    </select>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                        <span style="color:#F00;font-size:16px;font-weight:bold;">如果要删除某个分类请设置为“选择分类”即可！</span>
                     </td>
                 </tr>
                 <tr>
@@ -151,28 +167,29 @@
                 <tr>
                     <td>
                         商品类型：
-                        <?php buildSelect('Type', 'type_id', 'id', 'type_name',$data['type_id']); ?>
+                        <?php buildSelect('Type', 'type_id', 'id', 'type_name', $data['type_id']); ?>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <ul id="attr_list">
                             <!-- 循环所有原属性值 -->
-                            <?php  $attrId = array(); foreach($gaData as $k => $v): if( in_array($v['attr_id'],attrId)) $opt='-'; else { $opt='+'; $attrId[]=$v['attr_id']; } ?>
+                            <?php  $attrId = array(); foreach ($gaData as $k => $v): if(in_array($v['attr_id'], $attrId)) $opt = '-'; else { $opt = '+'; $attrId[] = $v['attr_id']; } ?>
                             <li>
-                                <?php if($v['attr_type']=='可选'): ?>
-                                <a onclick="addNewAttr(this);" href="#">[<?php echo $opt;?>]</a>
+                                <input type="hidden" name="goods_attr_id[]" value="<?php echo $v['id']; ?>" />
+                                <?php if($v['attr_type'] == '可选'): ?>
+                                <a onclick="addNewAttr(this);" href="#">[<?php echo $opt; ?>]</a>
                                 <?php endif; ?>
-                                <?php echo $v['attr_name']; ?>:
-                                <?php if($v['attr_option_values']): ?>
-                                <select name="" id="">
-                                    <option value="">请选择</option>
-                                    <?php foreach($attr as $k1 => $v1): if($v1 == $v['attr_value']) $select = 'selected="selected"'; else $select = ''; ?>
-                                        <option <?php echo $select; ?>value="<?php echo $v1; ?>"><?php echo $v1; ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                <?php echo $v['attr_name']; ?> :
+                                <?php if($v['attr_option_values']): $attr = explode(',', $v['attr_option_values']); ?>
+                                <select name="attr_value[<?php echo $v['attr_id']; ?>][]">
+            						<option value="">请选择</option>
+            						<?php foreach ($attr as $k1 => $v1): if($v1 == $v['attr_value']) $select = 'selected="selected"'; else $select = ''; ?>
+            							<option <?php echo $select; ?> value="<?php echo $v1; ?>"><?php echo $v1; ?></option>
+            						<?php endforeach; ?>
+            					</select>
                                 <?php else: ?>
-                                <input type="text" value="<?php echo $v['attr_value']; ?>" />
+                                <input type="text" name="attr_value[<?php echo $v['attr_id']; ?>][]" value="<?php echo $v['attr_value']; ?>" />
                                 <?php endif; ?>
                             </li>
                             <?php endforeach; ?>
@@ -282,6 +299,7 @@
                     // 循环每个属性
                     $(data).each(function(k, v) {
                         li += '<li>';
+
                         // 如果这个属性类型是可选的就有一个+
                         if (v.attr_type == '可选')
                             li += '<a onclick="addNewAttr(this);" href="#">[+]</a>';
@@ -320,12 +338,33 @@
         var li = $(a).parent();
         if ($(a).text() == '[+]') {
             var newLi = li.clone();
+            // 去掉选中状态
+            newLi.find("option:selected").removeAttr("selected");
+            // 把克隆出来的隐藏域里的ID清空
+            newLi.find("input[name='goods_attr_id[]']").val("");
             // +变-
             newLi.find("a").text('[-]');
             // 新的放在li后面
             li.after(newLi);
-        } else
-            li.remove();
+        } else {
+            // 先获取这个属性值的id
+            var gaid = li.find("input[name='goods_attr_id[]']").val();
+            // 如果没有ID就直接删除，如果有ID说明是旧的属性值需要AJAX删除
+            if (gaid == '')
+                li.remove();
+            else {
+                if (confirm('如果删除了这个属性，那么相关的库存量数据也会被一起删除，确定要删除吗？')) {
+                    $.ajax({
+                        type: "GET",
+                        url: "<?php echo U('ajaxDelAttr?goods_id='.$data['id'], '', FALSE); ?>/gaid/" + gaid,
+                        success: function(data) {
+                            // 再把页面中的记录删除
+                            li.remove();
+                        }
+                    });
+                }
+            }
+        }
     }
 </script>
 

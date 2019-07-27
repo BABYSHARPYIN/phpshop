@@ -3,17 +3,114 @@ namespace Admin\Controller;
 use Think\Controller;
 class GoodsController extends Controller 
 {
+	/**
+	 * 库存量页面
+	 *
+	 */
+	public function goods_number()
+	{
+		// 接收商品ID
+		$id = I('get.id');
+		$gnModel = D('goods_number');
+		
+		// 处理表单
+		if(IS_POST)
+		{
+			// 先删除原库存
+			$gnModel->where(array(
+				'goods_id' => array('eq', $id),
+			))->delete();
+			//var_dump($_POST);die;
+			$gaid = I('post.goods_attr_id');
+			$gn = I('post.goods_number');
+			// 先计算商品属性ID和库存量的比例
+			$gaidCount = count($gaid);
+			$gnCount = count($gn);
+			$rate = $gaidCount/$gnCount;
+			// 循环库存量
+			$_i = 0;  // 取第几个商品属性ID
+			foreach ($gn as $k => $v)
+			{
+				$_goodsAttrId = array();  // 把下面取出来的ID放这里
+				// 后来从商品属性ID数组中取出 $rate 个，循环一次取一个
+				for($i=0; $i<$rate; $i++)
+				{
+					$_goodsAttrId[] = $gaid[$_i];
+					$_i++;
+				}
+				// 先升序排列
+				sort($_goodsAttrId, SORT_NUMERIC);  // 以数字的形式排序
+				// 把取出来的商品属性ID转化成字符串
+				$_goodsAttrId = (string)implode(',', $_goodsAttrId);
+				$gnModel->add(array(
+					'goods_id' => $id,
+					'goods_attr_id' => $_goodsAttrId,
+					'goods_number' => $v,
+				));
+			}
+			$this->success('设置成功！', U('goods_number?id='.I('get.id')));
+			exit;
+		}
+		
+		// 根据商品ID取出这件商品所有可选属性的值
+		$gaModel = D('goods_attr');
+		$gaData = $gaModel->alias('a')
+		->field('a.*,b.attr_name')
+		->join('LEFT JOIN __ATTRIBUTE__ b ON a.attr_id=b.id')
+		->where(array(
+			'a.goods_id' => array('eq', $id),
+			'b.attr_type' => array('eq', '可选'),
+		))->select();
+		// 处理这个二维数组：转化成三维：把属性相同的放到一起
+		$_gaData = array();
+		foreach ($gaData as $k => $v)
+		{
+			$_gaData[$v['attr_name']][] = $v;
+		}
+		
+		// 先取出这件商品已经设置过的库存量
+		$gnData = $gnModel->where(array(
+			'goods_id' => $id,
+		))->select();
+		//var_dump($gnData);
+		
+		$this->assign(array(
+			'gaData' => $_gaData,
+			'gnData' => $gnData,
+		));
+		
+		// 设置页面信息
+		$this->assign(array(
+			'_page_title' => '库存量',
+			'_page_btn_name' => '返回列表',
+			'_page_btn_link' => U('lst'),
+		));
+   		// 1.显示表单
+   		$this->display();
+	}
+	// 处理删除属性
+	public function ajaxDelAttr()
+	{
+		$goodsId = addslashes(I('get.goods_id'));
+		$gaid = addslashes(I('get.gaid'));
+		$gaModel = D('goods_attr');
+		$gaModel->delete($gaid);
+		// 删除相关库存量数据
+		$gnModel = D('goods_number');
+		$gnModel->where(array(
+			'goods_id' => array('EXP' ,"=$goodsId or AND FIND_IN_SET($gaid, attr_list)"),
+		))->delete();
+	}
+	// 处理获取属性的AJAX请求
 	public function ajaxGetAttr()
 	{
-		//处理获取属性的AJAX请求
 		$typeId = I('get.type_id');
 		$attrModel = D('Attribute');
-		$attrData=$attrModel->where(array(
-			'type_id'=>array('eq',$typeId),
+		$attrData = $attrModel->where(array(
+			'type_id' => array('eq', $typeId),
 		))->select();
 		echo json_encode($attrData);
 	}
-	
 	// 处理AJAX删除图片的请求
 	public function ajaxDelPic()
 	{
@@ -34,9 +131,8 @@ class GoodsController extends Controller
 		{
 			//set_time_limit(0);
 			//var_dump($pics);
-			// var_dump($_POST);die;
+			//var_dump($_POST);die;
 			$model = D('goods');
-			
 			// 2. CREATE方法：a. 接收数据并保存到模型中 b.根据模型中定义的规则验证表单
 			/**
 			 * 第一个参数：要接收的数据默认是$_POST
@@ -63,9 +159,10 @@ class GoodsController extends Controller
 		// 取出所有的会员级别
 		$mlModel = D('member_level');
 		$mlData = $mlModel->select();
-		//取出所有的分类数据传入页面
-		$model = D('Category');
-		$catData = $model->getTree();
+		// 取出所有的分类做下拉框
+		$catModel = D('category');
+    	$catData = $catModel->getTree();
+		
 		// 设置页面信息
 		$this->assign(array(
 			'catData' => $catData,
@@ -85,6 +182,7 @@ class GoodsController extends Controller
 		$model = D('goods');
 		if(IS_POST)
 		{
+			// var_dump($_POST);die;
 			if($model->create(I('post.'), 2))
 			{
 				if(FALSE !== $model->save())  // save()的返回值是，如果失败返回false,如果成功返回受影响的条数【如果修改后和修改前相同就会返回0】
@@ -125,33 +223,34 @@ class GoodsController extends Controller
 			'goods_id' => array('eq', $id),
 		))->select();
 		
-		//取出所有的分类数据传入页面
-		$model = D('category');
-		$catData = $model->getTree();
-
-		//取出扩展分类
-		$gcModel = D('goods_cat');
-		$gcData = $gcModel->field('cat_id')->where(array(
+		// 取出所有的分类做下拉框
+		$catModel = D('category');
+    	$catData = $catModel->getTree();
+    	
+    	// 取出扩展分类ID
+    	$gcModel = D('goods_cat');
+    	$gcData = $gcModel->field('cat_id')->where(array(
 			'goods_id' => array('eq', $id),
 		))->select();
 		
-		//取出这件商品已经设置了的属性值
-		$gaModel = D('goods_attr');
-		$gaData=$gaModel->alias('a')
-		->field('a.*,b.attr_name,b.attr_type,b.attr_option_values')
-		->join('LEFT JOIN __ATTRIBUTE__ b ON a.attr_id = b.id')
+		// 取出当前类型下所有的属性
+		$attrModel = D('Attribute');
+		$attrData = $attrModel->alias('a')
+		->field('a.id attr_id,a.attr_name,a.attr_type,a.attr_option_values,b.attr_value,b.id')
+		->join('LEFT JOIN __GOODS_ATTR__ b ON (a.id=b.attr_id AND b.goods_id='.$id.')')
 		->where(array(
-			'a.goods_id'=>array('eq',$id),
+			'a.type_id' => array('eq', $data['type_id']),
 		))->select();
-		// var_dump($gaData);
+		//var_dump($gaData);
+		
 		// 设置页面信息
 		$this->assign(array(
-			'catData'=>$catData,
+			'catData' => $catData,
 			'mlData' => $mlData,
 			'mpData' => $_mpData,
 			'gpData' => $gpData,
 			'gcData' => $gcData,
-			'gaData'=>$gaData,
+			'gaData' => $attrData,
 			'_page_title' => '修改商品',
 			'_page_btn_name' => '商品列表',
 			'_page_btn_link' => U('lst'),
@@ -180,14 +279,14 @@ class GoodsController extends Controller
 		//	'data' => $data['data'],
 		//	'page' => $data['page'],
 		//));
-
-			//取出所有的分类数据传入页面
-			$model = D('Category');
-			$catData = $model->getTree();
+		
+		// 取出所有的分类做下拉框
+		$catModel = D('category');
+    	$catData = $catModel->getTree();
 		
 		// 设置页面信息
 		$this->assign(array(
-			'catData'=>$catData,
+			'catData' => $catData,
 			'_page_title' => '商品列表',
 			'_page_btn_name' => '添加新商品',
 			'_page_btn_link' => U('add'),
