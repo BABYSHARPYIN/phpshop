@@ -12,7 +12,6 @@ class GoodsController extends Controller
 		// 接收商品ID
 		$id = I('get.id');
 		$gnModel = D('goods_number');
-		
 		// 处理表单
 		if(IS_POST)
 		{

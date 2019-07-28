@@ -301,8 +301,8 @@
                         li += '<li>';
 
                         // 如果这个属性类型是可选的就有一个+
-                        if (v.attr_type == '可选')
-                            li += '<a onclick="addNewAttr(this);" href="#">[+]</a>';
+
+                        li += '<a onclick="addNewAttr(this);" href="#">[+]</a>';
                         // 属性名称
                         li += v.attr_name + ' : ';
                         // 如果属性有可选值就做下拉框，否则做文本框
