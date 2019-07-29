@@ -22,24 +22,24 @@
     <!--  内容  -->
     
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index/Admin/Brand/add" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Admin/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">品牌名称：</td>
+                <td class="label">用户名：</td>
                 <td>
-                    <input  type="text" name="brand_name" value="" />
+                    <input  type="text" name="username" value="" />
                 </td>
             </tr>
             <tr>
-                <td class="label">官方网址：</td>
+                <td class="label">密码：</td>
                 <td>
-                    <input  type="text" name="site_url" value="" />
+                    <input type="password" size="25" name="password" />
                 </td>
             </tr>
             <tr>
-                <td class="label">品牌Logo：</td>
+                <td class="label">确认密码：</td>
                 <td>
-                	<input type="file" name="logo" /> 
+                    <input type="password" size="25" name="cpassword" />
                 </td>
             </tr>
             <tr>

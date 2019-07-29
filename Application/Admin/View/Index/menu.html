@@ -160,6 +160,14 @@
                         <li class="menu-item"><a href="<?php echo U('Gii/Index/index'); ?>" target="main-frame">GII</a></li>
                     </ul>
                 </li>
+                <li class="explode" key="08_members" name="menu">
+                    RBAC
+                    <ul>
+                        <li class="menu-item"><a href="<?php echo U('Privilege/lst'); ?>" target="main-frame">权限列表</a></li>
+                        <li class="menu-item"><a href="<?php echo U('Role/lst'); ?>" target="main-frame">角色列表</a></li>
+                        <li class="menu-item"><a href="<?php echo U('Admin/lst'); ?>" target="main-frame">管理员列表</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <div id="help-div" style="display:none">

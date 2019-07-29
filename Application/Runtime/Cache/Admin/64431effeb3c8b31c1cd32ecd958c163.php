@@ -23,30 +23,31 @@
     
 
 <!-- 列表 -->
-<form method="post" action="" name="listForm" onsubmit="">
-    <div class="list-div" id="listDiv">
-        <table cellpadding="3" cellspacing="1">
-            <tr>
-                <th>分类名称</th>
-                <th>操作</th>
-            </tr>
-            <?php foreach ($data as $k => $v): ?>
-            <tr class="tron">
-                <td>
-                    <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?>
-                </td>
-                <td align="center">
-                    <a href="<?php echo U('edit?id='.$v['id']); ?>">修改</a>
-                    <a onclick="return confirm('确定要删除吗？');" href="<?php echo U('delete?id='.$v['id']); ?>">删除</a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-    </div>
-</form>
+<div class="list-div" id="listDiv">
+	<table cellpadding="3" cellspacing="1">
+    	<tr>
+            <th >角色名称</th>
+			<th width="60">操作</th>
+        </tr>
+		<?php foreach ($data as $k => $v): ?>            
+			<tr class="tron">
+				<td><?php echo $v['role_name']; ?></td>
+		        <td align="center">
+		        	<a href="<?php echo U('edit?id='.$v['id'].'&p='.I('get.p')); ?>" title="编辑">编辑</a> |
+	                <a href="<?php echo U('delete?id='.$v['id'].'&p='.I('get.p')); ?>" onclick="return confirm('确定要删除吗？');" title="移除">移除</a> 
+		        </td>
+	        </tr>
+        <?php endforeach; ?> 
+		<?php if(preg_match('/\d/', $page)): ?>  
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr> 
+        <?php endif; ?> 
+	</table>
+</div>
 
-<!-- 引入行高亮显示 -->
-<script type="text/javascript" src="/Public/Admin/Js/tron.js"></script>
+<script>
+</script>
+
+<script src="/Public/Admin/Js/tron.js"></script>
 
     <div id="footer"> 共执行 29 个查询，用时 0.539249 秒，Gzip 已禁用，内存占用 3.502 MB 版权所有 © 2005-2021 yinruizuishuai@gmail.com，并保留所有权利。</div>
 </body>

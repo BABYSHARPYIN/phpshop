@@ -116,6 +116,66 @@ create table shop_goods_number
 )engine=MyISAM default charset=utf8 comment '库存量';
 
 
+/************* RBAC ****************/
+
+
+DROP TABLE IF EXISTS shop_privilege;
+create table shop_privilege
+(
+	id mediumint unsigned not null auto_increment comment 'id',
+	pri_name varchar(30)  not null comment '权限名称',
+	module_name varchar(30) not null default'' comment'模块名称',
+	controller_name varchar(30) not null default'' comment'控制器名称',
+	action_name varchar(30) not null default'' comment'方法名称',
+	parent_id mediumint unsigned not null default'0' comment'上级权限Id',
+	primary key (id)
+)engine=MyISAM default charset=utf8 comment '权限';
+
+
+DROP TABLE IF EXISTS shop_role_pri;
+create table shop_role_pri
+(
+	pri_id mediumint unsigned not null comment'权限id',
+	role_id mediumint unsigned not null comment'角色id',
+	key pri_id(pri_id),
+	key role_id(role_id)
+)engine=MyISAM default charset=utf8 comment '角色权限';
+
+
+
+DROP TABLE IF EXISTS shop_role;
+create table shop_role
+(
+	id mediumint unsigned not null auto_increment comment 'id',
+	role_name varchar(30)  not null comment '角色名称',
+	primary key (id)
+)engine=MyISAM default charset=utf8 comment '角色';
+
+
+
+
+DROP TABLE IF EXISTS shop_admin_role;
+create table shop_admin_role
+(
+	admin_id mediumint unsigned not null comment'管理员id',
+	role_id mediumint unsigned not null comment'角色id',
+	key admin_id(admin_id),
+	key role_id(role_id)
+)engine=MyISAM default charset=utf8 comment '管理员角色';
+
+
+
+DROP TABLE IF EXISTS shop_admin;
+create table shop_admin
+(
+	id mediumint unsigned not null auto_increment comment 'id',
+	username varchar(30)  not null comment '用户名',
+	password varchar(32)  not null comment '密码',
+	primary key (id)
+)engine=MyISAM default charset=utf8 comment '管理员';
+
+INSERT INTO shop_admin(id,username,password) VALUES(1,'root','21232f297a57a5a743894a0e4a801fc3');
+
 
 
 

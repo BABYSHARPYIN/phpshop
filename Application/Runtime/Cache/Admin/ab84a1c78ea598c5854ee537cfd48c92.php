@@ -22,23 +22,12 @@
     <!--  内容  -->
     
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Category/add.html">
+    <form name="main_form" method="POST" action="/index.php/Admin/Role/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">上级分类：</td>
+                <td class="label">角色名称：</td>
                 <td>
-                    <select name="parent_id">
-                    	<option value="0">顶级分类</option>
-                    	<?php foreach ($catData as $k => $v): ?>
-                    	<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-                    	<?php endforeach; ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="label">分类名称：</td>
-                <td>
-                    <input size="60" type="text" name="cat_name" />
+                    <input  type="text" name="role_name" value="" />
                 </td>
             </tr>
             <tr>
@@ -50,6 +39,10 @@
         </table>
     </form>
 </div>
+
+
+<script>
+</script>
 
     <div id="footer"> 共执行 29 个查询，用时 0.539249 秒，Gzip 已禁用，内存占用 3.502 MB 版权所有 © 2005-2021 yinruizuishuai@gmail.com，并保留所有权利。</div>
 </body>
