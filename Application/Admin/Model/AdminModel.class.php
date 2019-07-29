@@ -8,8 +8,8 @@ class AdminModel extends Model
 	protected $_validate = array(
 		array('username', 'require', '用户名不能为空！', 1, 'regex', 3),
 		array('username', '1,30', '用户名的值最长不能超过 30 个字符！', 1, 'length', 3),
-		array('password', 'require', '密码不能为空！', 1, 'regex', 3),
-		array('password', '1,32', '密码的值最长不能超过 32 个字符！', 1, 'length', 3),
+		//第六个参数：规则什么时候生效：1、添加时生效 2、修改时生效 3、所有情况都生效
+		array('password', 'require', '密码不能为空！', 1, 'regex', 1),
 		array('username', '', '用户名已经存在！', 1, 'unique', 3),
 		array('cpassword', 'password', '两次密码输入不一致！', 1, 'confirm', 3),
 	);
@@ -33,17 +33,23 @@ class AdminModel extends Model
 	// 添加前
 	protected function _before_insert(&$data, $option)
 	{
+		$data['password'] = md5($data['password']);
 	}
 	// 修改前
 	protected function _before_update(&$data, $option)
 	{
+		if($data['password']){
+			$data['password'] = md5($data['password']);
+		}else{
+		 unset ($data['password']); //从表单中删除这个字段，就不会修改表单
+		}
 	}
 	// 删除前
 	protected function _before_delete($option)
 	{
-		if(is_array($option['where']['id']))
+		if($option['where']['id'] == 1)
 		{
-			$this->error = '不支持批量删除';
+			$this->error = '超级管理员无法删除！';
 			return FALSE;
 		}
 	}
