@@ -21,27 +21,24 @@
 
     <!--  内容  -->
     
-
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Admin/edit/id/3.html" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
+    <form name="main_form" method="POST" action="/index.php/Admin/Category/add.html">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">用户名：</td>
+                <td class="label">上级分类：</td>
                 <td>
-                    <input type="text" name="username" value="<?php echo $data['username']; ?>" />
+                    <select name="parent_id">
+                    	<option value="0">顶级分类</option>
+                    	<?php foreach ($catData as $k => $v): ?>
+                    	<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+                    	<?php endforeach; ?>
+                    </select>
                 </td>
             </tr>
             <tr>
-                <td class="label">密码：</td>
+                <td class="label">分类名称：</td>
                 <td>
-                    <input type="password" size="25" name="password" /> 密码为空则不修改密码
-                </td>
-            </tr>
-            <tr>
-                <td class="label">确认密码：</td>
-                <td>
-                    <input type="password" size="25" name="cpassword" />
+                    <input size="60" type="text" name="cat_name" />
                 </td>
             </tr>
             <tr>
@@ -53,10 +50,6 @@
         </table>
     </form>
 </div>
-
-
-<script>
-</script>
 
     <div id="footer"> 共执行 29 个查询，用时 0.539249 秒，Gzip 已禁用，内存占用 3.502 MB 版权所有 © 2005-2021 yinruizuishuai@gmail.com，并保留所有权利。</div>
 </body>

@@ -21,27 +21,25 @@
 
     <!--  内容  -->
     
-
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Admin/edit/id/3.html" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
+    <form name="main_form" method="POST" action="/index.php/Admin/Brand/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
-                <td class="label">用户名：</td>
+                <td class="label">品牌名称：</td>
                 <td>
-                    <input type="text" name="username" value="<?php echo $data['username']; ?>" />
+                    <input  type="text" name="brand_name" value="" />
                 </td>
             </tr>
             <tr>
-                <td class="label">密码：</td>
+                <td class="label">官方网址：</td>
                 <td>
-                    <input type="password" size="25" name="password" /> 密码为空则不修改密码
+                    <input  type="text" name="site_url" value="" />
                 </td>
             </tr>
             <tr>
-                <td class="label">确认密码：</td>
+                <td class="label">品牌Logo：</td>
                 <td>
-                    <input type="password" size="25" name="cpassword" />
+                	<input type="file" name="logo" /> 
                 </td>
             </tr>
             <tr>

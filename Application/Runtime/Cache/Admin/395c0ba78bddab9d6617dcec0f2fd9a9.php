@@ -22,41 +22,31 @@
     <!--  内容  -->
     
 
-<div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Admin/edit/id/3.html" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
-        <table cellspacing="1" cellpadding="3" width="100%">
+<!-- 列表 -->
+<form method="post" action="" name="listForm" onsubmit="">
+    <div class="list-div" id="listDiv">
+        <table cellpadding="3" cellspacing="1">
             <tr>
-                <td class="label">用户名：</td>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+            <?php foreach ($data as $k => $v): ?>
+            <tr class="tron">
                 <td>
-                    <input type="text" name="username" value="<?php echo $data['username']; ?>" />
+                    <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?>
+                </td>
+                <td align="center">
+                    <a href="<?php echo U('edit?id='.$v['id']); ?>">修改</a>
+                    <a onclick="return confirm('确定要删除吗？');" href="<?php echo U('delete?id='.$v['id']); ?>">删除</a>
                 </td>
             </tr>
-            <tr>
-                <td class="label">密码：</td>
-                <td>
-                    <input type="password" size="25" name="password" /> 密码为空则不修改密码
-                </td>
-            </tr>
-            <tr>
-                <td class="label">确认密码：</td>
-                <td>
-                    <input type="password" size="25" name="cpassword" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="99" align="center">
-                    <input type="submit" class="button" value=" 确定 " />
-                    <input type="reset" class="button" value=" 重置 " />
-                </td>
-            </tr>
+            <?php endforeach; ?>
         </table>
-    </form>
-</div>
+    </div>
+</form>
 
-
-<script>
-</script>
+<!-- 引入行高亮显示 -->
+<script type="text/javascript" src="/Public/Admin/Js/tron.js"></script>
 
     <div id="footer"> 共执行 29 个查询，用时 0.539249 秒，Gzip 已禁用，内存占用 3.502 MB 版权所有 © 2005-2021 yinruizuishuai@gmail.com，并保留所有权利。</div>
 </body>

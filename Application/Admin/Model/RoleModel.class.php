@@ -50,6 +50,17 @@ class RoleModel extends Model
 	// 修改前
 	protected function _before_update(&$data, $option)
 	{
+		$priId = I('post.pri_id');
+		$rpModel = D('role_pri');
+		$rpModel->where(array(
+			'role_id'=>array('eq',$option['where']['id'])
+		))->delete();
+		foreach($priId as $v){
+			$rpModel->add(array(
+				'pri_id' => $v,
+				'role_id' => $option['where']['id'],
+			));
+		}
 	}
 	// 删除前
 	protected function _before_delete($option)
