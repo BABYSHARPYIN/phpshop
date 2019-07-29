@@ -7,6 +7,7 @@ class RoleController extends Controller
     {
     	if(IS_POST)
     	{
+				// var_dump($_POST);die;
     		$model = D('Role');
     		if($model->create(I('post.'), 1))
     		{
@@ -17,10 +18,15 @@ class RoleController extends Controller
     			}
     		}
     		$this->error($model->getError());
-    	}
+			}
+			
+			//取出所有的权限
+			$priModel = D('privilege');
+			$priData=$priModel->getTree();
 
 		// 设置页面中的信息
 		$this->assign(array(
+			'priData' => $priData,
 			'_page_title' => '添加角色',
 			'_page_btn_name' => '角色列表',
 			'_page_btn_link' => U('lst'),
