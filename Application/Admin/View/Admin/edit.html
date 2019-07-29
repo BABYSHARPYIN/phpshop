@@ -5,6 +5,21 @@
         <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
         <table cellspacing="1" cellpadding="3" width="100%">
             <tr>
+                <td class="label">角色列表：</td>
+                <td>
+                    <?php foreach ($roleData as $k=>$v): 
+                    if(strpos(','.$roleId.',',','. $v['id'].',') !== false)
+                            $check = 'checked = "checked"';
+                            else
+                            $check = '';
+                    ?>
+                    <input <?php echo $check; ?> type="checkbox" name="role_id[]" value="
+                    <?php echo $v['id']; ?>" />
+                    <?php echo $v['role_name'];?>
+                    <?php endforeach; ?>
+                </td>
+            </tr>
+            <tr>
                 <td class="label">用户名：</td>
                 <td>
                     <input type="text" name="username" value="<?php echo $data['username']; ?>" />
