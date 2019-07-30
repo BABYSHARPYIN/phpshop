@@ -50,6 +50,7 @@ class RoleModel extends Model
 	// 修改前
 	protected function _before_update(&$data, $option)
 	{
+		/******** 处理拥有 的权限ID **********/
 		$priId = I('post.pri_id');
 		$rpModel = D('role_pri');
 		$rpModel->where(array(
