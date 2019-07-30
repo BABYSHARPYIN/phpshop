@@ -65,11 +65,16 @@ class RoleModel extends Model
 	// 删除前
 	protected function _before_delete($option)
 	{
-		if(is_array($option['where']['id']))
-		{
-			$this->error = '不支持批量删除';
-			return FALSE;
-		}
+			//从中间表中把这个权限相关的数据删除
+			$rpModel = D('role_pri');
+			$rpData->where(array(
+				'role_id'=>array('eq',$option['where']['id'])
+			))->delete();
+
+		$arModel = D('admin_role');
+		$arModel->where(array(
+			'role_id'=>array('eq',$option['where']['id'])
+		))->delete();
 	}
 	/************************************ 其他方法 ********************************************/
 }

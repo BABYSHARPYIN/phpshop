@@ -66,5 +66,10 @@ class PrivilegeModel extends Model
 			$this->error = '有下级数据无法删除';
 			return FALSE;
 		}
+		//从中间表中把这个权限相关的数据删除
+		$rpModel = D('role_pri');
+		$rpData->where(array(
+			'pri_id'=>array('eq',$option['where']['id'])
+		))->delete();
 	}
 }

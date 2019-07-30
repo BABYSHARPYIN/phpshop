@@ -82,6 +82,10 @@ class AdminModel extends Model
 			$this->error = '超级管理员无法删除！';
 			return FALSE;
 		}
+		$arModel = D('admin_role');
+		$arModel->where(array(
+			'admin_id'=>array('eq',$option['where']['id'])
+		))->delete();
 	}
 	/************************************ 其他方法 ********************************************/
 }
