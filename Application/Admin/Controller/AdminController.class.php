@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
-class AdminController extends Controller 
+class AdminController extends BaseController  
 {
     public function add()
     {
@@ -17,15 +16,14 @@ class AdminController extends Controller
     			}
     		}
     		$this->error($model->getError());
-			}
-			
-			$roleModel = D('Role');
-			$roleData = $roleModel -> select();
-
+    	}
+    	
+    	$roleModel = D('Role');
+    	$roleData = $roleModel->select();
 
 		// 设置页面中的信息
 		$this->assign(array(
-			'roleData' => $roleData,	
+			'roleData' => $roleData,
 			'_page_title' => '添加管理员',
 			'_page_btn_name' => '管理员列表',
 			'_page_btn_link' => U('lst'),
@@ -50,20 +48,20 @@ class AdminController extends Controller
     	}
     	$model = M('Admin');
     	$data = $model->find($id);
-			$this->assign('data', $data);
-			
-			$roleModel = D('Role');
-			$roleData = $roleModel -> select();
-			//取出当前管理员所在角色ID
-			$arModel = D('admin_role');
-			$roleId = $arModel->field('GROUP_CONCAT(role_id) role_id')->where(array(
-				'admin_id'=>array('eq',$id),
-			))->find();
+    	$this->assign('data', $data);
+    	
+    	$roleModel = D('Role');
+    	$roleData = $roleModel->select();
+    	// 取出当前管理员所在的角色ID
+    	$arModel = D('admin_role');
+    	$roleId = $arModel->field('GROUP_CONCAT(role_id) role_id')->where(array(
+    		'admin_id' => array('eq', $id),
+    	))->find();
 
 		// 设置页面中的信息
 		$this->assign(array(
 			'roleId' => $roleId['role_id'],
-			'roleData'=>$roleData,
+			'roleData' => $roleData,
 			'_page_title' => '修改管理员',
 			'_page_btn_name' => '管理员列表',
 			'_page_btn_link' => U('lst'),

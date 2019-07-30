@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
-class AttributeController extends Controller 
+class AttributeController extends BaseController 
 {
     public function add()
     {

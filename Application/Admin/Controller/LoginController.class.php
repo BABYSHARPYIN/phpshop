@@ -13,6 +13,7 @@ class LoginController extends Controller
             'length' => 4,      //验证码位数
             'useNoise' => TRUE,    //关闭验证码杂点
         ));
+        $Verify->codeSet = '0123456789'; 
         $Verify->entry();
     }
     public function login()

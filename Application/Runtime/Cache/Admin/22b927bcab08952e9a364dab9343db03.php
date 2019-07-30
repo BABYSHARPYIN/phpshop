@@ -21,39 +21,13 @@
 
     <!--  内容  -->
     
-
 <div class="main-div">
-    <form name="main_form" method="POST" action="/index.php/Admin/Admin/edit/id/12.html" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
+    <form name="main_form" method="POST" action="/index.php/Admin/Type/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
-            <?php if($data['id']>1): ?>
             <tr>
-                <td class="label">角色列表：</td>
+                <td class="label">类型名称：</td>
                 <td>
-                    <?php foreach ($roleData as $k=>$v): if(strpos(','.$roleId.',',','. $v['id'].',') !== false) $check = 'checked = "checked"'; else $check = ''; ?>
-                    <input <?php echo $check; ?> type="checkbox" name="role_id[]" value="
-                    <?php echo $v['id']; ?>" />
-                    <?php echo $v['role_name'];?>
-                    <?php endforeach; ?>
-                </td>
-            </tr>
-            <?php endif; ?>
-            <tr>
-                <td class="label">用户名：</td>
-                <td>
-                    <input type="text" name="username" value="<?php echo $data['username']; ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td class="label">密码：</td>
-                <td>
-                    <input type="password" size="25" name="password" /> 密码为空则不修改密码
-                </td>
-            </tr>
-            <tr>
-                <td class="label">确认密码：</td>
-                <td>
-                    <input type="password" size="25" name="cpassword" />
+                    <input  type="text" name="type_name" value="" />
                 </td>
             </tr>
             <tr>

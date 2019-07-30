@@ -20,7 +20,7 @@ class AdminModel extends Model
 		array('username', 'require', '用户名不能为空！', 1),
 		array('password', 'require', '密码不能为空！', 1),
 		array('chkcode', 'require', '验证码不能为空！', 1),
-		array('chkcode', 'check_verify', '验证不正确！', 1, 'callback'),
+		array('chkcode', 'check_verify', '验证码不正确！', 1, 'callback'),
 	);
 	//验证验证码是否正确
 	function check_verify($code, $id = '')

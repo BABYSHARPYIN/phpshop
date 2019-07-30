@@ -2,9 +2,8 @@
 
 namespace Admin\Controller;
 
-use Think\Controller;
 
-class RoleController extends Controller
+class RoleController extends BaseController
 {
 	public function add()
 	{

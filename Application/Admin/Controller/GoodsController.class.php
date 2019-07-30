@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
-class GoodsController extends Controller 
+class GoodsController extends BaseController 
 {
 	/**
 	 * 库存量页面

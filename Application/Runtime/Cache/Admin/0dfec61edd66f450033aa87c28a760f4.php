@@ -9,7 +9,7 @@
 </head>
 
 <body style="background: #278296;color:white">
-    <form method="post" action="/index/Admin/Login/login">
+    <form method="post" action="/index.php/Admin/Login/login.html">
         <table cellspacing="0" cellpadding="0" style="margin-top:100px" align="center">
             <tr>
                 <td>
