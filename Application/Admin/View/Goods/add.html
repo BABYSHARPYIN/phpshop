@@ -33,11 +33,12 @@
                     <td class="label">主分类：</td>
                     <td>
                         <select name="cat_id">
-	                    	<option value="">选择分类</option>
-	                    	<?php foreach ($catData as $k => $v): ?>
-	                    	<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-	                    	<?php endforeach; ?>
-	                    </select>
+                            <option value="">选择分类</option>
+                            <?php foreach ($catData as $k => $v): ?>
+                            <option value="<?php echo $v['id']; ?>">
+                                <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <span class="require-field">*</span>
                     </td>
                 </tr>
@@ -47,11 +48,12 @@
                         <ul id="cat_list">
                             <li>
                                 <select name="ext_cat_id[]">
-			                    	<option value="">选择分类</option>
-			                    	<?php foreach ($catData as $k => $v): ?>
-			                    	<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
-			                    	<?php endforeach; ?>
-			                    </select>
+                                    <option value="">选择分类</option>
+                                    <?php foreach ($catData as $k => $v): ?>
+                                    <option value="<?php echo $v['id']; ?>">
+                                        <?php echo str_repeat('-', 8*$v['level']) . $v['cat_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </li>
                         </ul>
                     </td>
@@ -90,6 +92,52 @@
                     <td>
                         <input type="radio" name="is_on_sale" value="是" checked="checked" /> 是
                         <input type="radio" name="is_on_sale" value="否" /> 否
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">促销价格：</td>
+                    <td>
+                        价格：￥<input type="text" name="promote_price" size="10" /> 开始时间：
+                        <input type="text" id="promote_start_date" name="promote_start_date" /> 结束时间：
+                        <input type="text" id="promote_end_date" name="promote_end_date" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">是否新品：</td>
+                    <td>
+                        <input type="radio" name="is_new" value="是" /> 是
+                        <input type="radio" name="is_new" value="否" checked="checked" /> 否
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">是否精选：</td>
+                    <td>
+                        <input type="radio" name="is_best" value="是" /> 是
+                        <input type="radio" name="is_best" value="否" checked="checked" /> 否
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">是否热门：</td>
+                    <td>
+                        <input type="radio" name="is_hot" value="是" /> 是
+                        <input type="radio" name="is_hot" value="否" checked="checked" /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">推荐到楼层：</td>
+                    <td>
+                        <input type="radio" name="is_floor" value="是" /> 是
+                        <input type="radio" name="is_floor" value="否" checked="checked" /> 否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">排序：</td>
+                    <td>
+                        <input type="text" name="sort_num" value="100" size="8" />更小的数值会被排序在前面
                     </td>
                 </tr>
             </table>
@@ -147,6 +195,21 @@
         </form>
     </div>
 </div>
+<!-- 引入时间插件 -->
+<link href="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/datepicker-zh_cn.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.css" />
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js">
+</script>
+<script>
+    // 添加时间插件
+    $.timepicker.setDefaults($.timepicker.regional['zh-CN']); // 设置使用中文 
+
+    $("#promote_start_date").datetimepicker();
+    $("#promote_end_date").datetimepicker();
+</script>
 
 
 <!--导入在线编辑器 -->
@@ -206,7 +269,8 @@
                         if (v.attr_option_values == "")
                             li += '<input type="text" name="attr_value[' + v.id + '][]" />';
                         else {
-                            li += '<select name="attr_value[' + v.id + '][]"><option value="">请选择...</option>';
+                            li += '<select name="attr_value[' + v.id +
+                                '][]"><option value="">请选择...</option>';
                             // 把可选值根据,转化成数组
                             var _attr = v.attr_option_values.split(',');
                             // 循环每个值制作option

@@ -6,8 +6,8 @@ use Think\Model;
 
 class CategoryModel extends Model
 {
-	protected $insertFields = array('cat_name', 'parent_id');
-	protected $updateFields = array('id', 'cat_name', 'parent_id');
+	protected $insertFields = array('cat_name', 'parent_id', 'is_floor');
+	protected $updateFields = array('id', 'cat_name', 'parent_id', 'is_floor');
 	protected $_validate = array(
 		array('cat_name', 'require', '分类名称不能为空！', 1, 'regex', 3),
 	);
@@ -78,26 +78,19 @@ class CategoryModel extends Model
 		// 先从缓存中取出数据
 		$catData = S('catData');
 		// 判断如果没有缓存或者缓存过期就重新构造数组
-		if(!$catData)
-		{
+		if (!$catData) {
 			// 取出所有的分类
 			$all = $this->select();
 			$ret = array();
 			// 循环所有的分类找出顶级分类
-			foreach ($all as $k => $v)
-			{
-				if($v['parent_id'] == 0)
-				{
+			foreach ($all as $k => $v) {
+				if ($v['parent_id'] == 0) {
 					// 循环所有的分类找出这个顶级分类的子分类
-					foreach ($all as $k1 => $v1)
-					{
-						if($v1['parent_id'] == $v['id'])
-						{
+					foreach ($all as $k1 => $v1) {
+						if ($v1['parent_id'] == $v['id']) {
 							// 循环所有的分类找出这个二级分类的子分类
-							foreach ($all as $k2 => $v2)
-							{
-								if($v2['parent_id'] == $v1['id'])
-								{
+							foreach ($all as $k2 => $v2) {
+								if ($v2['parent_id'] == $v1['id']) {
 									$v1['children'][] = $v2;
 								}
 							}
@@ -110,8 +103,27 @@ class CategoryModel extends Model
 			// 把数组缓存1天
 			S('catData', $ret, 86400);
 			return $ret;
-		}
-		else
+		} else
 			return $catData;  // 有缓存直接返回缓存数据
+	}
+	/**
+	 * 获取前台首页楼层中的数据
+	 */
+	public function floorData()
+	{
+		//先取出推荐到楼层的顶级分类
+		$ret = $this->where(array(
+			'parent_id' => array('eq', 0),
+			'is_floor' => array('eq', '是'),
+		))->select();
+			//循环每个楼层取出楼层中的数据
+			foreach($ret as $k => $v){
+				/**取出未推荐的二级分类，并保存到这个顶级分类的subCat字段中 */
+				$ret[$k]['subCat'] =	$this->where(array(
+					'parent_id' => array('eq', $v['id']),
+					'is_floor' => array('eq', '否'),
+					))->select();
+			}
+		return $ret;
 	}
 }
