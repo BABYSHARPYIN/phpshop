@@ -1,4 +1,24 @@
 <layout name="Common/layout" />
+<!-- 引入这个页面专用的css和js -->
+<link rel="stylesheet" href="__PUBLIC__/Home/style/goods.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/Home/style/common.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/Home/style/jqzoom.css" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/Home/js/goods.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jqzoom-core.js"></script>
+<!-- jqzoom 效果 -->
+<script type="text/javascript">
+    $(function() {
+        $('.jqzoom').jqzoom({
+            zoomType: 'standard',
+            lens: true,
+            preloadImages: false,
+            alwaysOn: false,
+            title: false,
+            zoomWidth: 400,
+            zoomHeight: 400
+        });
+    })
+</script>
 <!-- 引入导航条文件 -->
 <include file="Common/nav" /> 商品详情页
 <include file="Common/help" />

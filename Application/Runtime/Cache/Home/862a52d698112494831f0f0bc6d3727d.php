@@ -6,6 +6,9 @@
     <title>
         <?php echo $_page_title; ?>
     </title>
+    <meta name="keywords" content="<?php echo $_page_keywords; ?>" />
+    <meta name="description" content="<?php echo $_page_description; ?>" />
+
     <!-- 引入公共的CSS -->
     <link rel="stylesheet" href="/Public/Home/style/base.css" type="text/css">
     <link rel="stylesheet" href="/Public/Home/style/global.css" type="text/css">
@@ -41,6 +44,26 @@
     <div style="clear:both;"></div>
 
     
+<!-- 引入这个页面专用的css和js -->
+<link rel="stylesheet" href="/Public/Home/style/goods.css" type="text/css">
+<link rel="stylesheet" href="/Public/Home/style/common.css" type="text/css">
+<link rel="stylesheet" href="/Public/Home/style/jqzoom.css" type="text/css">
+<script type="text/javascript" src="/Public/Home/js/goods.js"></script>
+<script type="text/javascript" src="/Public/Home/js/jqzoom-core.js"></script>
+<!-- jqzoom 效果 -->
+<script type="text/javascript">
+    $(function() {
+        $('.jqzoom').jqzoom({
+            zoomType: 'standard',
+            lens: true,
+            preloadImages: false,
+            alwaysOn: false,
+            title: false,
+            zoomWidth: 400,
+            zoomHeight: 400
+        });
+    })
+</script>
 <!-- 引入导航条文件 -->
 <!-- 头部 start -->
 <div class="header w1210 bc mt15">
@@ -142,14 +165,14 @@
     <!-- 导航条部分 start -->
     <div class="nav w1210 bc mt10">
         <!--  商品分类部分 start-->
-        <div class="category fl cat1">
-            <div class="cat_hd off">
+        <div class="category fl <?php if($_show_nav == 0) echo 'cat1'; ?>">
+            <div class="cat_hd <?php if($_show_nav == 0) echo 'off'; ?>">
                 <!-- 注意，首页在此div上只需要添加cat_hd类，非首页，默认收缩分类时添加上off类，并将cat_bd设置为不显示(加上类none即可)，鼠标滑过时展开菜单则将off类换成on类 -->
                 <h2>全部商品分类</h2>
                 <em></em>
             </div>
 
-            <div class="cat_bd none">
+            <div class="cat_bd <?php if($_show_nav == 0) echo 'none'; ?>">
 
                 <div class="cat item1">
                     <h3><a href="">图像、音像、数字商品</a> <b></b></h3>

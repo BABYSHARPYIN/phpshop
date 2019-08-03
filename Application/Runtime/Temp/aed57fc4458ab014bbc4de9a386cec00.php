@@ -1,0 +1,3 @@
+<?php
+//000000086400a:2:{i:0;a:4:{s:2:"id";s:1:"1";s:8:"cat_name";s:9:"房地产";s:9:"parent_id";s:1:"0";s:8:"children";a:1:{i:0;a:4:{s:2:"id";s:1:"2";s:8:"cat_name";s:10:"房地产2";s:9:"parent_id";s:1:"1";s:8:"children";a:1:{i:0;a:3:{s:2:"id";s:1:"3";s:8:"cat_name";s:10:"房地产3";s:9:"parent_id";s:1:"2";}}}}}i:1;a:4:{s:2:"id";s:1:"4";s:8:"cat_name";s:6:"租房";s:9:"parent_id";s:1:"0";s:8:"children";a:1:{i:0;a:3:{s:2:"id";s:1:"5";s:8:"cat_name";s:7:"租房1";s:9:"parent_id";s:1:"4";}}}}
+?>
