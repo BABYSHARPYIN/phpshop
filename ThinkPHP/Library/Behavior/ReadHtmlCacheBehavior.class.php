@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 namespace Behavior;
 use Think\Storage;
+
+$fp = null;
 /**
  * 系统行为扩展：静态缓存读取
  */
@@ -19,6 +21,18 @@ class ReadHtmlCacheBehavior {
         // 开启静态缓存
         if(IS_GET && C('HTML_CACHE_ON'))  {
             $cacheTime = $this->requireHtmlCache();
+            //判断静态页是否存在
+            if( false !== $cacheTime && $this->checkHTMLCache(HTML_FILE_NAME,$cacheTime)) { //静态页面有效
+                // 读取静态页面输出
+                echo Storage::read(HTML_FILE_NAME,'html');
+                exit();
+            }
+
+            //如果静态页不存在或者已经过期就向后执行 =》 只让一个客户端通过这里生成静态页，其他客户端阻塞在这里等待第一个客户端生成静态页
+            global $fp;
+            $fp = fopen('./read_html_cache.lock','r');
+            flock($fp,'LOCK_EX');//只有一个客户端可以通过，其他的堵塞在这
+            
             if( false !== $cacheTime && $this->checkHTMLCache(HTML_FILE_NAME,$cacheTime)) { //静态页面有效
                 // 读取静态页面输出
                 echo Storage::read(HTML_FILE_NAME,'html');

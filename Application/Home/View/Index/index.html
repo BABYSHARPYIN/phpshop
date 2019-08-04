@@ -371,33 +371,13 @@
             <h2><a href="">更多品牌&nbsp;></a><strong>品牌旗舰店</strong></h2>
             <div class="sidebar_wrap">
                 <ul>
+                    <?php foreach ($v['brand'] as $k => $v): ?>
                     <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/dell.gif" alt="" /></a>
+                        <a href="">
+                            <?php showImage($v['logo']);?>
+                        </a>
                     </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/acer.gif" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/fujitsu.jpg" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/hp.jpg" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/lenove.jpg" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/samsung.gif" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/dlink.gif" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/seagate.jpg" alt="" /></a>
-                    </li>
-                    <li>
-                        <a href=""><img src="__PUBLIC__/Home/images/intel.jpg" alt="" /></a>
-                    </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
