@@ -318,7 +318,7 @@
             <div class="cate_wrap">
                 <ul>
                     <?php foreach($v['subCat'] as $k1=>$v1): ?>
-                    <li><a href=""><b>.</b><?php echo $v1['cat_name'] ?>></a></li>
+                    <li><a href=""><b>.</b><?php echo $v1['cat_name']; ?></a></li>
                     <?php endforeach; ?>
                 </ul>
                 <p>
@@ -333,146 +333,31 @@
         <!-- 商品列表信息 start-->
         <div class="goodslist fl">
             <h2>
-                <span class="on">推荐商品</span>
-                <span>电脑整机</span>
-                <span>电脑配件</span>
-                <span>办公打印</span>
-                <span>网络产品</span>
+                <?php foreach ($v['recSubCat'] as $k1 => $v1): ?>
+                <span <?php if($k1==0 ) echo 'class="on"'; ?>><?php echo $v1['cat_name']; ?></span>
+                <?php endforeach; ?>
             </h2>
             <div class="goodslist_wrap">
-                <div>
+                <!-- 有几个按钮就循环几个放商品的DIV，默认只显示第一个 -->
+                <?php foreach ($v['recSubCat'] as $k1 => $v1): ?>
+                <div <?php if($k1>0) echo 'class="none"'; ?>>
                     <ul>
+                        <?php foreach ($v1['goods'] as $k2 => $v2): ?>
                         <li>
                             <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/hpG4.jpg" alt="" /></a></dt>
-                                <dd><a href="">惠普G4-1332TX 14英寸笔</a></dd>
-                                <dd><span>售价：</span> <strong>￥2999.00</strong></dd>
+                                <dt><a href="<?php echo U('goods?id='.$v2['id']); ?>"><?php showImage($v2['mid_logo']); ?></a></dt>
+                                <dd>
+                                    <a href="<?php echo U('goods?id='.$v2['id']); ?>">
+                                        <?php echo $v2['goods_name']; ?>
+                                    </a>
+                                </dd>
+                                <dd><span>售价：</span> <strong>￥<?php echo $v2['shop_price']; ?>元</strong></dd>
                             </dl>
                         </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/thinkpad e420.jpg" alt="" /></a></dt>
-                                <dd><a href="">ThinkPad E42014英寸笔..</a></dd>
-                                <dd><span>售价：</span> <strong>￥4199.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/acer4739.jpg" alt="" /></a></dt>
-                                <dd><a href="">宏碁AS4739-382G32Mnk</a></dd>
-                                <dd><span>售价：</span> <strong>￥2799.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/samsung6800.jpg" alt="" /></a></dt>
-                                <dd><a href="">三星Galaxy Tab P6800.</a></dd>
-                                <dd><span>售价：</span> <strong>￥4699.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/lh531.jpg" alt="" /></a></dt>
-                                <dd><a href="">富士通LH531 14.1英寸笔记</a></dd>
-                                <dd><span>售价：</span> <strong>￥2189.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/qinghuax2.jpg" alt="" /></a></dt>
-                                <dd><a href="">清华同方精锐X2笔记本 </a></dd>
-                                <dd><span>售价：</span> <strong>￥2499.00</strong></dd>
-                            </dl>
-                        </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
-
-                <div class="none">
-                    <ul>
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/hpG4.jpg" alt="" /></a></dt>
-                                <dd><a href="">惠普G4-1332TX 14英寸笔</a></dd>
-                                <dd><span>售价：</span> <strong>￥2999.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/qinghuax2.jpg" alt="" /></a></dt>
-                                <dd><a href="">清华同方精锐X2笔记本 </a></dd>
-                                <dd><span>售价：</span> <strong>￥2499.00</strong></dd>
-                            </dl>
-                        </li>
-
-                    </ul>
-                </div>
-
-                <div class="none">
-                    <ul>
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/thinkpad e420.jpg" alt="" /></a></dt>
-                                <dd><a href="">ThinkPad E42014英寸笔..</a></dd>
-                                <dd><span>售价：</span> <strong>￥4199.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/acer4739.jpg" alt="" /></a></dt>
-                                <dd><a href="">宏碁AS4739-382G32Mnk</a></dd>
-                                <dd><span>售价：</span> <strong>￥2799.00</strong></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="none">
-                    <ul>
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/acer4739.jpg" alt="" /></a></dt>
-                                <dd><a href="">宏碁AS4739-382G32Mnk</a></dd>
-                                <dd><span>售价：</span> <strong>￥2799.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/samsung6800.jpg" alt="" /></a></dt>
-                                <dd><a href="">三星Galaxy Tab P6800.</a></dd>
-                                <dd><span>售价：</span> <strong>￥4699.00</strong></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="none">
-                    <ul>
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/samsung6800.jpg" alt="" /></a></dt>
-                                <dd><a href="">三星Galaxy Tab P6800.</a></dd>
-                                <dd><span>售价：</span> <strong>￥4699.00</strong></dd>
-                            </dl>
-                        </li>
-
-                        <li>
-                            <dl>
-                                <dt><a href=""><img src="__PUBLIC__/Home/images/lh531.jpg" alt="" /></a></dt>
-                                <dd><a href="">富士通LH531 14.1英寸笔记</a></dd>
-                                <dd><span>售价：</span> <strong>￥2189.00</strong></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
-
+                <?php endforeach; ?>
             </div>
         </div>
         <!-- 商品列表信息 end-->

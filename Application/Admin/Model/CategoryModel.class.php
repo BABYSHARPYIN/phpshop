@@ -116,14 +116,31 @@ class CategoryModel extends Model
 			'parent_id' => array('eq', 0),
 			'is_floor' => array('eq', '是'),
 		))->select();
-			//循环每个楼层取出楼层中的数据
-			foreach($ret as $k => $v){
-				/**取出未推荐的二级分类，并保存到这个顶级分类的subCat字段中 */
-				$ret[$k]['subCat'] =	$this->where(array(
-					'parent_id' => array('eq', $v['id']),
-					'is_floor' => array('eq', '否'),
-					))->select();
+		$goodsModel = D('Admin/Goods');
+		//循环每个楼层取出楼层中的数据
+		foreach ($ret as $k => $v) {
+			/**取出未推荐的二级分类，并保存到这个顶级分类的subCat字段中 */
+			$ret[$k]['subCat'] =	$this->where(array(
+				'parent_id' => array('eq', $v['id']),
+				'is_floor' => array('eq', '否'),
+			))->select();
+			/**取出推荐的二级分类，并保存到这个顶级分类的subCat字段中 */
+			$ret[$k]['recSubCat'] =	$this->where(array(
+				'parent_id' => array('eq', $v['id']),
+				'is_floor' => array('eq', '是'),
+			))->select();
+			/**循环每个推荐的二级分类取出分类下的8件被推荐到楼层的商品 */
+			foreach ($ret[$k]['recSubCat'] as $k1 => &$v1) {
+				//取出这个分类下所有商品的ID并返回一维数组
+				$gids = $goodsModel->getGoodsIdByCatId($v1['id']);
+				//再根据商品ID取出商品的详细信息
+				$v1['goods'] = $goodsModel->field('id,mid_logo,goods_name,shop_price')->where(array(
+					'is_on_sale' => array('eq', '是'),
+					'is_floor' => array('eq', '是'),
+					'id' => array('in', $gids),
+				))->order('sort_num ASC')->select();
 			}
+		}
 		return $ret;
 	}
 }

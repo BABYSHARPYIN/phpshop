@@ -232,7 +232,7 @@ class GoodsModel extends Model
 	public function getGoodsIdByCatId($catId)
 	{
 		// 先取出所有子分类的ID
-		$catModel = D('category');
+		$catModel = D('Admin/Category');
 		$children = $catModel->getChildren($catId);
 		// 和子分类放一起
 		$children[] = $catId;

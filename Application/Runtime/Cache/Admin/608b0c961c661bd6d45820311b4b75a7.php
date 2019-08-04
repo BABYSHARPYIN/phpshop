@@ -173,10 +173,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">排序：</td>
+                    <td class="label">推荐到楼层：</td>
                     <td>
-                        <input type="text" name="sort_num" value="<?php echo $data['sort_num']; ?>" size="8" />小的数值会被排序在前面
+                        <input type="radio" name="is_floor" value="是" <?php if($data[ 'is_floor']=='是' ) echo 'checked="checked"' ?>/> 是
+                        <input type="radio" name="is_floor" value="否" <?php if($data[ 'is_floor']=='否' ) echo 'checked="checked"' ?>/> 否
                     </td>
+                </tr>
+
+                <td class="label">排序：</td>
+                <td>
+                    <input type="text" name="sort_num" value="<?php echo $data['sort_num']; ?>" size="8" />更小的数值会被排序在前面
+                </td>
                 </tr>
             </table>
             <!-- 商品描述 -->
