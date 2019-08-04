@@ -61,6 +61,7 @@ class IndexController extends NavController
     // 商品详情页
     public function goods()
     {
+
     	// 接收商品的ID
     	$id = I('get.id');
     	// 根据ID取出商品的详细信息
@@ -69,7 +70,11 @@ class IndexController extends NavController
     	// 再根据主分类ID找出这个分类所有上级分类制作导航
     	$catModel = D('Admin/Category');
     	$catPath = $catModel->parentPath($info['cat_id']);
-    	
+			//取出商品的相册
+			$gpModel = D('goods_pic');
+			$gpModel->where(array(
+				'goods_id' => array('eq',$id),
+			)) -> select();
     	$this->assign(array(
     		'info' => $info,
     		'catPath' => $catPath,
