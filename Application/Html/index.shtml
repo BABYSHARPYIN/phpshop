@@ -183,6 +183,21 @@
                         <a href="">
                             入住酒店                        </a> <b></b></h3>
                     <div class="cat_detail none">
+                                                <dl class="dl_1st">
+                            <dt><a href="">入住1</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                                <dl >
+                            <dt><a href="">入住2</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                                <dl >
+                            <dt><a href="">入住3</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
                                             </div>
                 </div>
                                 <div class="cat ">
@@ -649,16 +664,6 @@
                                 <dd><span>售价：</span> <strong>￥0.00元</strong></dd>
                             </dl>
                         </li>
-                                                <li>
-                            <dl>
-                                <dt><a href="/index.php/Home/Index/goods/id/9.html"><img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-04/thumb_2_5d4644f0c52b6.jpg' /></a></dt>
-                                <dd>
-                                    <a href="/index.php/Home/Index/goods/id/9.html">
-                                        测试商品                                    </a>
-                                </dd>
-                                <dd><span>售价：</span> <strong>￥0.00元</strong></dd>
-                            </dl>
-                        </li>
                                             </ul>
                 </div>
                             </div>
@@ -718,6 +723,7 @@
                 入住酒店            </h2>
             <div class="cate_wrap">
                 <ul>
+                                        <li><a href=""><b>.</b>入住3</a></li>
                                     </ul>
                 <p>
                     <a href=""><img src="/Public/Home/images/notebook.jpg" alt="" /></a>
@@ -731,9 +737,19 @@
         <!-- 商品列表信息 start-->
         <div class="goodslist fl">
             <h2>
+                                <span class="on">入住1</span>
+                                <span >入住2</span>
                             </h2>
             <div class="goodslist_wrap">
                 <!-- 有几个按钮就循环几个放商品的DIV，默认只显示第一个 -->
+                                <div >
+                    <ul>
+                                            </ul>
+                </div>
+                                <div class="none">
+                    <ul>
+                                            </ul>
+                </div>
                             </div>
         </div>
         <!-- 商品列表信息 end-->

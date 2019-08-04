@@ -107,6 +107,19 @@ class CategoryModel extends Model
 			return $catData;  // 有缓存直接返回缓存数据
 	}
 	/**
+	 * 取出一个分类所有上级分类
+	 */
+	public function parentPath($catId)
+	{
+		static $ret = array();
+		$info = $this->field('id,cat_name,partent_id')->find($catId);
+		$ret[] = $info;
+		//如果还有上级再取上级的信息
+		if($info['parent_id']>0)
+			$this ->parentPath($info['parent_id']);
+		return $ret;
+	}
+	/**
 	 * 获取前台首页楼层中的数据
 	 */
 	public function floorData()

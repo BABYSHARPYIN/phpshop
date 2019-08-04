@@ -1,13 +1,12 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>
-        <?php echo $_page_title; ?>
-    </title>
-    <meta name="keywords" content="<?php echo $_page_keywords; ?>" />
-    <meta name="description" content="<?php echo $_page_description; ?>" />
+        商品详情页    </title>
+    <meta name="keywords" content="商品详情页" />
+    <meta name="description" content="商品详情页" />
 
     <!-- 引入公共的CSS -->
     <link rel="stylesheet" href="/Public/Home/style/base.css" type="text/css">
@@ -166,38 +165,67 @@
     <!-- 导航条部分 start -->
     <div class="nav w1210 bc mt10">
         <!--  商品分类部分 start-->
-        <div class="category fl <?php if($_show_nav == 0) echo 'cat1'; ?>">
-            <div class="cat_hd <?php if($_show_nav == 0) echo 'off'; ?>">
+        <div class="category fl cat1">
+            <div class="cat_hd off">
                 <!-- 注意，首页在此div上只需要添加cat_hd类，非首页，默认收缩分类时添加上off类，并将cat_bd设置为不显示(加上类none即可)，鼠标滑过时展开菜单则将off类换成on类 -->
                 <h2>全部商品分类</h2>
                 <em></em>
             </div>
 
-            <div class="cat_bd <?php if($_show_nav == 0) echo 'none'; ?>">
+            <div class="cat_bd none">
                 <!-- 循环输出三层分类数据 -->
-                <?php foreach ($catData as $k => $v): ?>
-                <div class="cat <?php if($k==0) echo 'item1'; ?>">
+                                <div class="cat item1">
                     <h3>
                         <a href="">
-                            <?php echo $v['cat_name'];?>
-                        </a> <b></b></h3>
+                            我要租房                        </a> <b></b></h3>
                     <div class="cat_detail none">
-                        <?php foreach ($v['children'] as $k1 => $v1): ?>
-                        <dl <?php if($k1==0) echo 'class="dl_1st"'; ?>>
-                            <dt><a href=""><?php echo $v1['cat_name'];?></a></dt>
+                                                <dl class="dl_1st">
+                            <dt><a href="">世嘉君座T1</a></dt>
                             <dd>
-                                <?php foreach ($v1['children'] as $k2 => $v2): ?>
-                                <a href="">
-                                    <?php echo $v2['cat_name'];?>
-                                </a>
-                                <?php endforeach; ?>
-                            </dd>
+                                                            </dd>
                         </dl>
-                        <?php endforeach; ?>
-                    </div>
+                                                <dl >
+                            <dt><a href="">世嘉君座T2</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                                <dl >
+                            <dt><a href="">世嘉君座T3</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                            </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
+                                <div class="cat ">
+                    <h3>
+                        <a href="">
+                            入住酒店                        </a> <b></b></h3>
+                    <div class="cat_detail none">
+                                                <dl class="dl_1st">
+                            <dt><a href="">入住1</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                                <dl >
+                            <dt><a href="">入住2</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                                <dl >
+                            <dt><a href="">入住3</a></dt>
+                            <dd>
+                                                            </dd>
+                        </dl>
+                                            </div>
+                </div>
+                                <div class="cat ">
+                    <h3>
+                        <a href="">
+                            我要托管                        </a> <b></b></h3>
+                    <div class="cat_detail none">
+                                            </div>
+                </div>
+                            </div>
 
         </div>
         <!--  商品分类部分 end-->
@@ -227,10 +255,8 @@
 		<div class="breadcrumb">
 			<h2>当前位置：
 			<a href="/">首页</a> > 
-			<?php  $count = count($catPath); for($i=$count-1; $i>=0; $i--): ?>
-				<a href=""><?php echo $catPath[$i]['cat_name']; ?></a> > 
-			<?php endfor; ?>
-			<?php echo $info['goods_name']; ?></h2>
+							<a href=""></a> > 
+						我不知道这是啥</h2>
 		</div>
 		<!-- 面包屑导航 end -->
 		
@@ -347,7 +373,7 @@
 				<div class="preview fl">
 					<div class="midpic">
 						<a href="/Public/Home/images/preview_l1.jpg" class="jqzoom" rel="gal1">   <!-- 第一幅图片的大图 class 和 rel属性不能更改 -->
-							<?php showImage($info['big_logo']); ?>               <!-- 第一幅图片的中图 -->
+							<img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-03/thumb_1_5d4532848bfd9.jpg' />               <!-- 第一幅图片的中图 -->
 						</a>
 					</div>
 	
@@ -811,12 +837,11 @@
 <!-- 底部导航 end -->
 
 <script>
-<?php $config = C('IMAGE_CONFIG'); ?>
-var viewPath = '<?php echo $config['viewPath']; ?>';
+var viewPath = 'http://www.shop.com/Public/Uploads/';
 // 记录浏览历史
 $.ajax({
 	type : "GET",
-	url : "<?php echo U('Index/displayHistory?id='.$info['id']); ?>",
+	url : "/index.php/Home/Index/displayHistory/id/1.html",
 	dataType : "json",
 	success : function(data)
 	{
@@ -824,7 +849,7 @@ $.ajax({
 		// 先拼HTML字符串
 		var html = "";
 		$(data).each(function(k,v){
-			html += '<dl><dt><a href="<?php echo U('goods', '', FALSE); ?>/id/'+v.id+'"><img src="'+viewPath+v.mid_logo+'" /></a></dt><dd><a href="<?php echo U('goods', '', FALSE); ?>/id/'+v.id+'">'+v.goods_name+'</a></dd></dl>';
+			html += '<dl><dt><a href="/index.php/Home/Index/goods/id/'+v.id+'"><img src="'+viewPath+v.mid_logo+'" /></a></dt><dd><a href="/index.php/Home/Index/goods/id/'+v.id+'">'+v.goods_name+'</a></dd></dl>';
 		});
 		// 放到 页面中
 		$("#display_history").html(html);
