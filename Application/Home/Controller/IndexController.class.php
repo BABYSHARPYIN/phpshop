@@ -1,11 +1,15 @@
 <?php
-
 namespace Home\Controller;
-
-class IndexController extends NavController
+class IndexController extends NavController 
 {
-    //处理浏览历史
-    public function displayHistory()
+	public function ajaxGetMemberPrice()
+	{
+		$goodsId = I('get.goods_id');
+		$gModel = D('Admin/Goods');
+		echo $gModel->getMemberPrice($goodsId);
+	}
+	// 处理浏览历史
+	public function displayHistory()
 	{
 		$id = I('get.id');
 		// 先从COOKIE中取出浏览历史的ID数组
@@ -28,40 +32,41 @@ class IndexController extends NavController
 		))->order("FIELD(id,$data)")->select();
 		echo json_encode($gData);
 	}
-    //首页
+	// 首页
     public function index()
     {
-        //取出促销的商品
-        $goodsModel = D('Admin/Goods');
-        $goods1 = $goodsModel->getPromoteGoods();
-        $goods2 = $goodsModel->getRecGoods('is_new');//新品
-        $goods3 = $goodsModel->getRecGoods('is_hot');//热门
-        $goods4 = $goodsModel->getRecGoods('is_best');//精品
-        //取出首页楼层的数据
-        $catModel = D('Admin/Category');
-        $floorData =  $catModel->floorData();
-        $this->assign(array(
-            'goods1' => $goods1,
-            'goods2' => $goods2,
-            'goods3' => $goods3,
-            'goods4' => $goods4,
-            'floorData' => $floorData,
-            
-        ));
-        //设置页面信息
-        $this->assign(array(
-            '_show_nav' => 1,
-            '_page_title' => '首页',
-            '_page_keywords'=>'首页',
-            '_page_description'=>'首页',
-        ));
-        $this->display();
+    	//$file = uniqid();
+    	//file_put_contents('./piao/'.$file, 'abc');
+    	// 取出疯狂抢购的商品
+    	$goodsModel = D('Admin/Goods');
+    	$goods1 = $goodsModel->getPromoteGoods();
+    	$goods2 = $goodsModel->getRecGoods('is_new'); //新品
+    	$goods3 = $goodsModel->getRecGoods('is_hot'); // 热卖
+    	$goods4 = $goodsModel->getRecGoods('is_best'); // 精品 
+    	// 取出首页楼层的数据
+    	$catModel = D('Admin/Category');
+    	$floorData = $catModel->floorData();
+    	
+    	
+    	$this->assign(array(
+    		'goods1' => $goods1,
+    		'goods2' => $goods2,
+    		'goods3' => $goods3,
+    		'goods4' => $goods4,
+    		'floorData' => $floorData,
+    	));
+    	// 设置页面信息
+    	$this->assign(array(
+    		'_show_nav' => 1,
+    		'_page_title' => '首页',
+    		'_page_keywords' => '首页',
+    		'_page_description' => '首页',
+    	));
+    	$this->display();
     }
-
     // 商品详情页
     public function goods()
     {
-
     	// 接收商品的ID
     	$id = I('get.id');
     	// 根据ID取出商品的详细信息
@@ -70,14 +75,52 @@ class IndexController extends NavController
     	// 再根据主分类ID找出这个分类所有上级分类制作导航
     	$catModel = D('Admin/Category');
     	$catPath = $catModel->parentPath($info['cat_id']);
-			//取出商品的相册
-			$gpModel = D('goods_pic');
-			$gpModel->where(array(
-				'goods_id' => array('eq',$id),
-			)) -> select();
+    	// 取出商品的相册 
+    	$gpModel = D('goods_pic');
+    	$gpData = $gpModel->where(array(
+    		'goods_id' => array('eq', $id),
+    	))->select();
+    	//header('Content-Type:text/html;charset=utf-8;');
+    	// 取出这件商品所有的属性
+    	$gaModel = D('goods_attr');
+    	$gaData = $gaModel->alias('a')
+    	->field('a.*,b.attr_name,b.attr_type')
+    	->join('LEFT JOIN __ATTRIBUTE__ b ON a.attr_id=b.id')
+    	->where(array(
+    		'a.goods_id' => array('eq', $id),
+    	))
+    	->select();
+    	// 整理所有的商品，把唯一的和可选的属性分开存放
+    	$uniArr = array();  // 唯一属性
+    	$mulArr = array();  // 可选属性
+    	foreach ($gaData as $k => $v)
+    	{
+    		if($v['attr_type'] == '唯一')
+    			$uniArr[] = $v;
+    		else 
+    			// 把同一个属性放到一起 -》 三维
+    			$mulArr[$v['attr_name']][] = $v;
+    	}
+    	// 取出这件商品所有的会员价格
+    	$mpModel = D('member_price');
+    	$mpData = $mpModel->alias('a')
+			    	->field('a.price,b.level_name')
+			    	->join('LEFT JOIN __MEMBER_LEVEL__ b ON a.level_id=b.id')
+			    	->where(array(
+			    		'a.goods_id' => array('eq', $id),
+			    	))
+			    	->select();
+    	
+    	$viewPath = C('IMAGE_CONFIG');
+    	
     	$this->assign(array(
     		'info' => $info,
     		'catPath' => $catPath,
+    		'gpData' => $gpData,
+    		'uniArr' => $uniArr,
+    		'mulArr' => $mulArr,
+    		'mpData' => $mpData,
+    		'viewPath' => $viewPath['viewPath'],
     	));
     	
     	// 设置页面信息
@@ -90,3 +133,8 @@ class IndexController extends NavController
     	$this->display();
     }
 }
+
+
+
+
+

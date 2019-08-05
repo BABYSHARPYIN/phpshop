@@ -487,6 +487,54 @@ class GoodsModel extends Model
 		->order('sort_num ASC')
 		->select();
 	}
+
+	public function getMemberPrice($goodsId)
+	{
+		$today = date('Y-m-d H:i');
+		$levelId = session('level_id');
+		// 取出商品的促销价格
+		$promotePrice = $this->field('promote_price')->where(array(
+			'id' => array('eq', $goodsId),
+			'promote_price' => array('gt', 0),
+			'promote_start_date' => array('elt', $today),
+			'promote_end_date' => array('egt', $today),
+		))->find();
+		
+		// 判断会员有没有登录
+		if($levelId)
+		{
+			$mpModel = D('member_price');
+			$mpData = $mpModel->field('price')->where(array(
+				'goods_id' => array('eq', $goodsId),
+				'level_id' => array('eq', $levelId),
+			))->find();
+			// 这个级别有没有设置会员价格
+			if($mpData['price'])
+			{
+				if($promotePrice['promote_price'])
+					return min($promotePrice['promote_price'], $mpData['price']);
+				else 
+					return $mpData['price'];
+			}
+			else 
+			{
+				// 如果没有设置这个级别的价格就直接返回本店价格
+				$p = $this->field('shop_price')->find($goodsId);
+				if($promotePrice['promote_price'])
+					return min($promotePrice['promote_price'], $p['shop_price']);
+				else 
+					return $p['shop_price'];
+			}
+		}
+		else 
+		{
+			$p = $this->field('shop_price')->find($goodsId);
+			if($promotePrice['promote_price'])
+				return min($promotePrice['promote_price'], $p['shop_price']);
+			else 
+				return $p['shop_price'];
+		}
+	}
 }
 
 

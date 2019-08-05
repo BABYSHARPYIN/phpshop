@@ -1,0 +1,11 @@
+    
+                                        接口文档
+
+接口说明：获取某一件商品的会员价格
+接口请求地址：http://www.shop.com/index.php/Home/Index/ajaxGetMemberPrice
+                Home模块中的Idex控制器中的ajaxGetMemberPrice方法
+接口请求的方式：GET|POST      
+  	$goodsId = I('get.goods_id'); //GET方式
+接口参数：goods_id： 商品id
+返回类型：数字
+    JSON|XML

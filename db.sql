@@ -198,3 +198,13 @@ create table shop_admin
 )engine=MyISAM default charset=utf8 comment '管理员';
 INSERT INTO shop_admin(id,username,password) VALUES(1,'root','21232f297a57a5a743894a0e4a801fc3');
 
+drop table if exists shop_member;
+create table shop_member
+(
+	id mediumint unsigned not null auto_increment comment 'Id',
+	username varchar(30) not null comment '用户名',
+	password char(32) not null comment '密码',
+	face VARCHAR(150) not null DEFAULT '' comment '头像',
+	jifen mediumint unsigned not null DEFAULT '0' comment '积分',
+	primary key (id)
+)engine=MyISAM default charset=utf8 comment '会员';
