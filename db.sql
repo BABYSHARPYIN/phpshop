@@ -208,3 +208,15 @@ create table shop_member
 	jifen mediumint unsigned not null DEFAULT '0' comment '积分',
 	primary key (id)
 )engine=MyISAM default charset=utf8 comment '会员';
+
+drop table if exists shop_cart;
+create table shop_cart
+(
+	id mediumint unsigned not null auto_increment comment 'Id',
+	goods_id mediumint unsigned not null comment '商品Id',
+	goods_attr_id varchar(150) not null DEFAULT '' comment '商品属性Id',
+	goods_number mediumint unsigned not null comment '购买的数量',
+	member_id mediumint unsigned not null comment '会员Id',
+	primary key (id),
+	key member_id(member_id)
+)engine=MyISAM default charset=utf8 comment '购物车';
