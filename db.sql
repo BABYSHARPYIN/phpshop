@@ -220,3 +220,37 @@ create table shop_cart
 	primary key (id),
 	key member_id(member_id)
 )engine=MyISAM default charset=utf8 comment '购物车';
+
+
+drop table if exists p39_order;
+create table p39_order
+(
+	id mediumint unsigned not null auto_increment comment 'Id',
+	member_id mediumint unsigned not null comment '会员Id',
+	addtime int unsigned not null comment '下单时间',
+	pay_status enum('是','否') not null DEFAULT '否' comment '支付状态',
+	pay_time int unsigned not null DEFAULT '0' comment '支付之间',
+	total_price DECIMAL(10,2) not null comment '定单总价',
+	shr_name VARCHAR(30) not null comment '收货人姓名',
+	shr_tel VARCHAR(30) not null comment '收货人电话',
+	shr_id VARCHAR(30) not null comment '收货人身份证号',
+	post_status TINYINT unsigned not null DEFAULT '0' comment '定单状态，0：未确认，1：确认中，2：已确认',
+	primary key (id),
+	key member_id(member_id),
+	key addtime(addtime)
+)engine=MyISAM default charset=utf8 comment '定单基本信息';
+
+drop table if exists p39_order_goods;
+create table p39_order_goods
+(
+	id mediumint unsigned not null auto_increment comment 'Id',
+	order_id mediumint unsigned not null comment '定单Id',
+	goods_id mediumint unsigned not null comment '定单Id',
+	goods_attr_id VARCHAR(150) not null DEFAULT '' comment '商品属性Id',
+	goods_number mediumint unsigned not null comment '购买的数量',
+	price decimal(10,2) not null comment '购买的价格',
+	primary key (id),
+	key order_id(order_id),
+	key goods_id(goods_id)
+)engine=MyISAM default charset=utf8 comment '定单商品表';
+
