@@ -18,13 +18,12 @@ class MemberController extends Controller
 	// 制作验证码
 	public function chkcode()
 	{
-			$Verify = new \Think\Verify(array(
-					'fontsize' => 30,   //验证码字体大小
-					'length' => 4,      //验证码位数
-					'useNoise' => TRUE,    //关闭验证码杂点
-			));
-			$Verify->codeSet = '0123456789'; 
-			$Verify->entry();
+		$Verify = new \Think\Verify(array(
+		    'fontSize'    =>    30,    // 验证码字体大小
+		    'length'      =>    4,     // 验证码位数
+		    'useNoise'    =>    FALSE, // 关闭验证码杂点
+		));
+		$Verify->entry();
 	}
     public function login()
     {

@@ -97,10 +97,10 @@
         <div class="user fl">
             <dl>
                 <dt>
-                    <em></em>
-                    <a href="">用户中心</a>
-                    <b></b>
-                </dt>
+						<em></em>
+						<a href="">用户中心</a>
+						<b></b>
+					</dt>
                 <dd>
                     <div class="prompt">
                         您好，请<a href="">登录</a>
@@ -145,12 +145,12 @@
         <div class="cart fl">
             <dl>
                 <dt>
-                    <a href="">去购物车结算</a>
-                    <b></b>
-                </dt>
+						<a id="cart_list" href="<?php echo U('Cart/lst'); ?>">去购物车结算</a>
+						<b></b>
+					</dt>
                 <dd>
-                    <div class="prompt">
-                        购物车中还没有商品，赶紧选购吧！
+                    <div class="prompt" id="cart_div_list">
+                        <img src="/Public/Home/images/loading.gif" />
                     </div>
                 </dd>
             </dl>
@@ -218,6 +218,30 @@
 <!-- 头部 end-->
 
 <div style="clear:both;"></div>
+
+<script>
+    <?php $ic = C('IMAGE_CONFIG'); ?>
+    var picView = "<?php echo $ic['viewPath']; ?>";
+    $("#cart_list").mouseover(function() {
+        $.ajax({
+            type: "GET",
+            url: "<?php echo U('Cart/ajaxCartList'); ?>",
+            dataType: "json",
+            success: function(data) {
+                // 拼出HTML放到页中
+                var html = "<table>";
+                $(data).each(function(k, v) {
+                    html += "<tr>";
+                    html += '<td><img width="50" src="' + picView + v.mid_logo + '" /></td>';
+                    html += '<td>' + v.goods_name + '</td>';
+                    html += '</tr>';
+                });
+                html += "</table>";
+                $("#cart_div_list").html(html);
+            }
+        });
+    });
+</script>
 
 <!-- 商品页面主体 start -->
 <div class="main w1210 mt10 bc">
@@ -388,15 +412,17 @@
                     <li><span>商品编号： </span>
                         <?php echo $info['id']; ?>
                     </li>
-                    <li class="market_price"><span>市场价格：</span><em>￥<?php echo $info['market_price']; ?>元</em></li>
-                    <li class="shop_price"><span>本店价格：</span> <strong>￥<?php echo $info['shop_price']; ?>元</strong></li>
+                    <li class="market_price"><span>定价：</span><em>￥<?php echo $info['market_price']; ?>元</em></li>
+                    <li class="shop_price"><span>本店价：</span> <strong>￥<?php echo $info['shop_price']; ?>元</strong></li>
                     <li class="shop_price"><span>会员价格：</span>
                         <p>
-                            <table cellpadding="5" cellspacing="5" width="30%">
+                            <table border="1" cellpadding="5" cellspacing="5" width="30%">
                                 <?php foreach ($mpData as $k => $v): ?>
                                 <tr>
                                     <td>
-                                        <?php echo $v['level_name']; ?>￥
+                                        <?php echo $v['level_name']; ?>
+                                    </td>
+                                    <td>￥
                                         <?php echo $v['price']; ?>元</td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -793,11 +819,7 @@
             // 先拼HTML字符串
             var html = "";
             $(data).each(function(k, v) {
-                html += '<dl><dt><a href="<?php echo U('
-                goods ', '
-                ', FALSE); ?>/id/' + v.id + '"><img src="' + viewPath + v.mid_logo + '" /></a></dt><dd><a href="<?php echo U('
-                goods ', '
-                ', FALSE); ?>/id/' + v.id + '">' + v.goods_name + '</a></dd></dl>';
+                html += '<dl><dt><a href="<?php echo U('goods ', '', FALSE); ?>/id/' + v.id + '"><img src="' + viewPath + v.mid_logo + '" /></a></dt><dd><a href="<?php echo U('goods ', '', FALSE); ?>/id/' + v.id + '">' + v.goods_name + '</a></dd></dl>';
             });
             // 放到 页面中
             $("#display_history").html(html);

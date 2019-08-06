@@ -96,10 +96,10 @@
         <div class="user fl">
             <dl>
                 <dt>
-                    <em></em>
-                    <a href="">用户中心</a>
-                    <b></b>
-                </dt>
+						<em></em>
+						<a href="">用户中心</a>
+						<b></b>
+					</dt>
                 <dd>
                     <div class="prompt">
                         您好，请<a href="">登录</a>
@@ -144,12 +144,12 @@
         <div class="cart fl">
             <dl>
                 <dt>
-                    <a href="">去购物车结算</a>
-                    <b></b>
-                </dt>
+						<a id="cart_list" href="/index.php/Home/Cart/lst.html">去购物车结算</a>
+						<b></b>
+					</dt>
                 <dd>
-                    <div class="prompt">
-                        购物车中还没有商品，赶紧选购吧！
+                    <div class="prompt" id="cart_div_list">
+                        <img src="/Public/Home/images/loading.gif" />
                     </div>
                 </dd>
             </dl>
@@ -244,6 +244,29 @@
 
 <div style="clear:both;"></div>
 
+<script>
+        var picView = "http://www.shop.com/Public/Uploads/";
+    $("#cart_list").mouseover(function() {
+        $.ajax({
+            type: "GET",
+            url: "/index.php/Home/Cart/ajaxCartList.html",
+            dataType: "json",
+            success: function(data) {
+                // 拼出HTML放到页中
+                var html = "<table>";
+                $(data).each(function(k, v) {
+                    html += "<tr>";
+                    html += '<td><img width="50" src="' + picView + v.mid_logo + '" /></td>';
+                    html += '<td>' + v.goods_name + '</td>';
+                    html += '</tr>';
+                });
+                html += "</table>";
+                $("#cart_div_list").html(html);
+            }
+        });
+    });
+</script>
+
 <!-- 商品页面主体 start -->
 <div class="main w1210 mt10 bc">
     <!-- 面包屑导航 start -->
@@ -252,7 +275,7 @@
             <a href="/">首页</a> >
                         <a href="">
                             </a> >
-                        商品属性测试        </h2>
+                        城市商圈        </h2>
     </div>
     <!-- 面包屑导航 end -->
 
@@ -363,14 +386,14 @@
     <div class="goods_content fl mt10 ml10">
         <!-- 商品概要信息 start -->
         <div class="summary">
-            <h3><strong>商品属性测试</strong></h3>
+            <h3><strong>城市商圈</strong></h3>
 
             <!-- 图片预览区域 start -->
             <div class="preview fl">
                 <div class="midpic">
-                    <a href="http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_0_5d4792900c350.jpg" class="jqzoom" rel="gal1">
+                    <a href="http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_0_5d479161c5058.jpg" class="jqzoom" rel="gal1">
                         <!-- 第一幅图片的大图 class 和 rel属性不能更改 -->
-                        <img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_1_5d4792900c350.jpg' />                        <!-- 第一幅图片的中图 -->
+                        <img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_1_5d479161c5058.jpg' />                        <!-- 第一幅图片的中图 -->
                     </a>
                 </div>
 
@@ -383,18 +406,10 @@
                         <ul>
                             <!-- 第一个是logo小图 -->
                             <li class="cur">
-                                <a class="zoomThumbActive" href="javascript:void(0);" rel="{gallery: 'gal1', smallimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_1_5d4792900c350.jpg',largeimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_0_5d4792900c350.jpg'}">
-                                    <img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_3_5d4792900c350.jpg' />                                </a>
+                                <a class="zoomThumbActive" href="javascript:void(0);" rel="{gallery: 'gal1', smallimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_1_5d479161c5058.jpg',largeimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_0_5d479161c5058.jpg'}">
+                                    <img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_3_5d479161c5058.jpg' />                                </a>
                             </li>
                             <!-- 循环相册中的图片　-->
-                                                        <li>
-                                <a href="javascript:void(0);" rel="{gallery: 'gal1', smallimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_1_5d479af79cbd0.png',largeimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_0_5d479af79cbd0.png'}">
-                                    <img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_2_5d479af79cbd0.png' />                                </a>
-                            </li>
-                                                        <li>
-                                <a href="javascript:void(0);" rel="{gallery: 'gal1', smallimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_1_5d479af7d5228.jpg',largeimage: 'http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_0_5d479af7d5228.jpg'}">
-                                    <img   src='http://www.shop.com/Public/Uploads/Goods/2019-08-05/thumb_2_5d479af7d5228.jpg' />                                </a>
-                            </li>
                                                     </ul>
                     </div>
 
@@ -406,49 +421,24 @@
             <div class="goodsinfo fl ml10">
                 <ul>
                     <li><span>商品编号： </span>
-                        3                    </li>
-                    <li class="market_price"><span>市场价格：</span><em>￥999.00元</em></li>
-                    <li class="shop_price"><span>本店价格：</span> <strong>￥199.00元</strong></li>
+                        2                    </li>
+                    <li class="market_price"><span>定价：</span><em>￥0.00元</em></li>
+                    <li class="shop_price"><span>本店价：</span> <strong>￥9.00元</strong></li>
                     <li class="shop_price"><span>会员价格：</span>
                         <p>
-                            <table cellpadding="5" cellspacing="5" width="30%">
-                                                                <tr>
-                                    <td>
-                                        中级会员￥
-                                        950.00元</td>
-                                </tr>
-                                                                <tr>
-                                    <td>
-                                        高级会员￥
-                                        930.00元</td>
-                                </tr>
+                            <table border="1" cellpadding="5" cellspacing="5" width="30%">
                                                             </table>
                         </p>
                     </li>
                     <li class="shop_price"><span>购买价格：</span> <strong style="font-size:25px;" id="member_price"></strong></li>
                     <li><span>上架时间：</span>
-                        2019-08-05 10:20:29                    </li>
+                        2019-08-05 10:15:31                    </li>
                     <li class="star star3"><span>商品评分：</span> <strong></strong><a href="">(已有21人评价)</a></li>
                 </ul>
                 <!-- 加入购物车的表单 -->
                 <form action="/index.php/Home/Cart/add.html" method="post" class="choose">
-                    <input type="hidden" name="goods_id" value="3" />
+                    <input type="hidden" name="goods_id" value="2" />
                     <ul>
-                                                <li class="product">
-                            <dl>
-                                <dt>早餐供应：</dt>
-                                <dd>
-                                                                        <a class="selected" href="javascript:;">
-												有 
-												<input checked="checked" type="radio" name="goods_attr_id[7]" value="6" />
-											</a>
-                                                                        <a  href="javascript:;">
-												无 
-												<input  type="radio" name="goods_attr_id[7]" value="7" />
-											</a>
-                                                                    </dd>
-                            </dl>
-                        </li>
                                                 <li>
                             <dl>
                                 <dt>购买数量：</dt>
@@ -491,21 +481,11 @@
                 <div class="introduce detail_div none">
                     <div class="attr mt15">
                         <ul>
-                                                        <li><span>精装修：</span>
-                                是                            </li>
-                                                        <li><span>家具配齐：</span>
-                                是                            </li>
-                                                        <li><span>无线网络：</span>
-                                是                            </li>
-                                                        <li><span>24小时不间断热水：</span>
-                                是                            </li>
-                                                        <li><span>早餐供应：</span>
-                                是                            </li>
                                                     </ul>
                     </div>
 
                     <div class="desc mt10">
-                        <p><img src="http://www.shop.com/Public/umeditor1_2_2-utf8-php/php/upload/20190805/15649747354371.png" alt="15649747354371.png" /></p><p><img src="http://www.shop.com/Public/umeditor1_2_2-utf8-php/php/upload/20190805/15649747388738.png" alt="15649747388738.png" /></p><p><img src="http://www.shop.com/Public/umeditor1_2_2-utf8-php/php/upload/20190805/1564974740183.jpg" alt="1564974740183.jpg" /></p><p><img src="http://www.shop.com/Public/umeditor1_2_2-utf8-php/php/upload/20190805/15649747423849.png" alt="15649747423849.png" /></p><p><br /></p>                    </div>
+                                            </div>
                 </div>
                 <!-- 商品介绍 end -->
 
@@ -811,14 +791,14 @@
     // 记录浏览历史
     $.ajax({
         type: "GET",
-        url: "/index.php/Home/Index/displayHistory/id/3.html",
+        url: "/index.php/Home/Index/displayHistory/id/2.html",
         dataType: "json",
         success: function(data) {
             // 循环服务器返回的浏览历史数据放到页面中
             // 先拼HTML字符串
             var html = "";
             $(data).each(function(k, v) {
-                html += '<dl><dt><a href="/index.php/Home/Index/__                goods /id/' + v.id + '"><img src="' + viewPath + v.mid_logo + '" /></a></dt><dd><a href="/index.php/Home/Index/__                goods /id/' + v.id + '">' + v.goods_name + '</a></dd></dl>';
+                html += '<dl><dt><a href="/index.php/Home/Index/goods /id/' + v.id + '"><img src="' + viewPath + v.mid_logo + '" /></a></dt><dd><a href="/index.php/Home/Index/goods /id/' + v.id + '">' + v.goods_name + '</a></dd></dl>';
             });
             // 放到 页面中
             $("#display_history").html(html);
@@ -828,7 +808,7 @@
     // AJAX计算会员价格
     $.ajax({
         type: "GET",
-        url: "/index.php/Home/Index/ajaxGetMemberPrice/goods_id/3.html",
+        url: "/index.php/Home/Index/ajaxGetMemberPrice/goods_id/2.html",
         success: function(data) {
             $("#member_price").html("￥" + data + "元");
         }

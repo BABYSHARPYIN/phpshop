@@ -54,8 +54,8 @@ class MemberModel extends Model
 				))->find();
 				session('level_id', $levelId['id']);
 				// move CartData in cart to db
-				// $cartModel = D('Home/Cart');
-				// $cartModel->moveDataToDb();
+				$cartModel = D('Home/Cart');
+				$cartModel->moveDataToDb();
 				return TRUE;
 			}
 			else 
