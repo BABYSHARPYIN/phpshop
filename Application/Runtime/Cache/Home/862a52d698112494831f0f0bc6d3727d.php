@@ -819,7 +819,11 @@
             // 先拼HTML字符串
             var html = "";
             $(data).each(function(k, v) {
-                html += '<dl><dt><a href="<?php echo U('goods ', '', FALSE); ?>/id/' + v.id + '"><img src="' + viewPath + v.mid_logo + '" /></a></dt><dd><a href="<?php echo U('goods ', '', FALSE); ?>/id/' + v.id + '">' + v.goods_name + '</a></dd></dl>';
+                html += '<dl><dt><a href="<?php echo U('
+                goods ', '
+                ', FALSE); ?>/id/' + v.id + '"><img src="' + viewPath + v.mid_logo + '" /></a></dt><dd><a href="<?php echo U('
+                goods ', '
+                ', FALSE); ?>/id/' + v.id + '">' + v.goods_name + '</a></dd></dl>';
             });
             // 放到 页面中
             $("#display_history").html(html);

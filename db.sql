@@ -222,8 +222,8 @@ create table shop_cart
 )engine=MyISAM default charset=utf8 comment '购物车';
 
 
-drop table if exists p39_order;
-create table p39_order
+drop table if exists shop_order;
+create table shop_order
 (
 	id mediumint unsigned not null auto_increment comment 'Id',
 	member_id mediumint unsigned not null comment '会员Id',
@@ -240,8 +240,8 @@ create table p39_order
 	key addtime(addtime)
 )engine=MyISAM default charset=utf8 comment '定单基本信息';
 
-drop table if exists p39_order_goods;
-create table p39_order_goods
+drop table if exists shop_order_goods;
+create table shop_order_goods
 (
 	id mediumint unsigned not null auto_increment comment 'Id',
 	order_id mediumint unsigned not null comment '定单Id',

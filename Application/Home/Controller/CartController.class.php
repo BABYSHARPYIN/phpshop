@@ -22,7 +22,7 @@ class CartController extends Controller
 	// 购物车列表页
 	public function lst()
 	{
-		header('Content-Type:text/html;charset=utf-8');
+		// header('Content-Type:text/html;charset=utf-8');
 		$cartModel = D('Cart');
 		$data = $cartModel->cartList();
 		// var_dump($data);
