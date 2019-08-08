@@ -41,6 +41,14 @@ class OrderController extends Controller
 	}
 	public function order_success()
 	{
-		var_dump($_GET);
+		// $btn = makeAlipayBtn(I('get.order_id'));
+		// 设置页面信息
+    	$this->assign(array(
+    		// 'btn' => $btn,
+    		'_page_title' => '下单成功',
+    		'_page_keywords' => '下单成功',
+    		'_page_description' => '下单成功',
+    	));
+    	$this->display();
 	}
 }
