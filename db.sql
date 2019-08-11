@@ -291,4 +291,11 @@ create table shop_yinxiang
 	key goods_id(goods_id)
 )engine=InnoDB default charset=utf8 comment '印象';
 
+drop table if exists shop_sphinx_id;
+create table shop_sphinx_id
+(
+	id mediumint unsigned not null DEFAULT '0' comment '已经创建好索引的最后一件id'
+)engine=InnoDB default charset=utf8 comment 'sphinx';
+INSERT INTO shop_sphinx_id VALUE(0);
+
 
