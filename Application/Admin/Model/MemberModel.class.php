@@ -46,6 +46,7 @@ class MemberModel extends Model
 				// 登录成功存session
 				session('m_id', $user['id']);
 				session('m_username', $user['username']);
+				session('face', $user['/Public/Home/images/user1.gif']);
 				// 计算当前会员级别ID并存SESSION
 				$mlModel = D('member_level');
 				$levelId = $mlModel->field('id')->where(array(
