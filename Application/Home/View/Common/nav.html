@@ -10,7 +10,8 @@
             <div class="search_form">
                 <div class="form_left fl"></div>
                 <form action="" name="serarch" method="get" class="fl">
-                    <input type="text" class="txt" value="请输入商品关键字" /><input type="submit" class="btn" value="搜索" />
+                    <input id="key" name="key" type="text" class="txt" value="<?php echo I('get.key', '请输入商品关键字'); ?>" />
+                    <input onclick="location.href='<?php echo U('Search/key_search', '', FALSE); ?>/key/'+$('#key').val();" type="button" class="btn" value="搜索" />
                 </form>
                 <div class="form_right fl"></div>
             </div>
@@ -110,16 +111,16 @@
                 <?php foreach ($catData as $k => $v): ?>
                 <div class="cat <?php if($k==0) echo 'item1'; ?>">
                     <h3>
-                        <a href="">
+                        <a href="<?php echo U('Search/cat_search?cat_id='.$v['id']),'',FALSE; ?>">
                             <?php echo $v['cat_name'];?>
                         </a> <b></b></h3>
                     <div class="cat_detail none">
                         <?php foreach ($v['children'] as $k1 => $v1): ?>
                         <dl <?php if($k1==0) echo 'class="dl_1st"'; ?>>
-                            <dt><a href=""><?php echo $v1['cat_name'];?></a></dt>
+                            <dt><a href="<?php echo U('Search/cat_search?cat_id='.$v1['id']),'',FALSE; ?>"><?php echo $v1['cat_name'];?></a></dt>
                             <dd>
                                 <?php foreach ($v1['children'] as $k2 => $v2): ?>
-                                <a href="">
+                                <a href="<?php echo U('Search/cat_search?cat_id='.$v2['id']),'',FALSE; ?>">
                                     <?php echo $v2['cat_name'];?>
                                 </a>
                                 <?php endforeach; ?>

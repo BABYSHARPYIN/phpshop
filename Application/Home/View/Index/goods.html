@@ -30,13 +30,13 @@
         <h2>当前位置：
             <a href="/">首页</a> >
             <?php 
-			/**
-			 * 方法二、先反转数组再foreach，反转函数：array_reverse($catPath);
-			 */
-			
-			// 倒的循环输出
-			$count = count($catPath);
-			for($i=$count-1; $i>=0; $i--): ?>
+        /**
+         * 方法二、先反转数组再foreach，反转函数：array_reverse($catPath);
+         */
+        
+        // 倒的循环输出
+        $count = count($catPath);
+        for($i=$count-1; $i>=0; $i--): ?>
             <a href="">
                 <?php echo $catPath[$i]['cat_name']; ?>
             </a> >
@@ -233,9 +233,9 @@
                                 <dd>
                                     <?php foreach ($v as $k1 => $v1): ?>
                                     <a <?php if($k1==0) echo 'class="selected"'; ?> href="javascript:;">
-												<?php echo $v1['attr_value']; ?> 
-												<input <?php if($k1==0) echo 'checked="checked"'; ?> type="radio" name="goods_attr_id[<?php echo $v1['attr_id']; ?>]" value="<?php echo $v1['id']; ?>" />
-											</a>
+                                            <?php echo $v1['attr_value']; ?> 
+                                            <input <?php if($k1==0) echo 'checked="checked"'; ?> type="radio" name="goods_attr_id[<?php echo $v1['attr_id']; ?>]" value="<?php echo $v1['id']; ?>" />
+                                        </a>
                                     <?php endforeach; ?>
                                 </dd>
                             </dl>
