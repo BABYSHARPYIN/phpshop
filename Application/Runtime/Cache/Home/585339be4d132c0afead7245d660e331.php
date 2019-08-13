@@ -50,7 +50,7 @@
 <div class="header w990 bc mt15">
     <div class="logo w990">
         <h2 class="fl">
-            <a href="index.html"><img src="/Public/Home/images/logo.png" alt="京西商城"></a>
+            <a href="index.html"><img src="/Public/Home/images/logo.png" alt="聚亿顺商城"></a>
         </h2>
         <div class="flow fr flow2">
             <ul>
@@ -304,7 +304,7 @@
             <a href="">移动终端</a> |
             <a href="">友情链接</a> |
             <a href="">销售联盟</a> |
-            <a href="">京西论坛</a>
+            <a href="">聚亿顺论坛</a>
         </p>
         <p class="copyright">
             © 2005-2013 京东网上商城 版权所有，并保留所有权利。 ICP备案证书号:京ICP证070359号
@@ -332,7 +332,7 @@
             if (data.login == 1)
                 var li = '您好，' + data.username + ' [<a href="<?php echo U('Member/logout'); ?>">退出</a>]';
             else
-                var li = '您好，欢迎来到京西！[<a href="<?php echo U('Member/login'); ?>">登录</a>] [<a href="<?php echo U(' Member / regist '); ?>">免费注册</a>]'
+                var li = '您好，欢迎来到聚亿顺！[<a href="<?php echo U('Member/login'); ?>">登录</a>] [<a href="<?php echo U(' Member / regist '); ?>">免费注册</a>]'
                 $("#logInfo").html(li);
         }
     });

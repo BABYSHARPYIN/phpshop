@@ -51,7 +51,7 @@
     <!-- 头部上半部分 start 包括 logo、搜索、用户中心和购物车结算 -->
     <div class="logo w1210">
         <h1 class="fl">
-            <a href="index.html"><img src="/Public/Home/images/logo.png" alt="京西商城"></a>
+            <a href="index.html"><img src="/Public/Home/images/logo.png" alt="聚亿顺商城"></a>
         </h1>
         <!-- 头部搜索 start -->
         <div class="search fl">
@@ -68,61 +68,13 @@
 
             <div class="hot_search">
                 <strong>热门搜索:</strong>
-                <a href="">D-Link无线路由</a>
-                <a href="">休闲男鞋</a>
-                <a href="">TCL空调</a>
-                <a href="">耐克篮球鞋</a>
+                <a href="">酒店长租</a>
+                <a href="">酒店短租</a>
+                <a href="">娱乐轰趴</a>
+                <a href="">城市商圈</a>
             </div>
         </div>
         <!-- 头部搜索 end -->
-
-        <!-- 用户中心 start-->
-        <div class="user fl">
-            <dl>
-                <dt>
-						<em></em>
-						<a href="">用户中心</a>
-						<b></b>
-					</dt>
-                <dd>
-                    <div class="prompt">
-                        您好，请<a href="">登录</a>
-                    </div>
-                    <div class="uclist mt10">
-                        <ul class="list1 fl">
-                            <li><a href="">用户信息></a></li>
-                            <li><a href="">我的订单></a></li>
-                            <li><a href="">收货地址></a></li>
-                            <li><a href="">我的收藏></a></li>
-                        </ul>
-
-                        <ul class="fl">
-                            <li><a href="">我的留言></a></li>
-                            <li><a href="">我的红包></a></li>
-                            <li><a href="">我的评论></a></li>
-                            <li><a href="">资金管理></a></li>
-                        </ul>
-
-                    </div>
-                    <div style="clear:both;"></div>
-                    <div class="viewlist mt10">
-                        <h3>最近浏览的商品：</h3>
-                        <ul>
-                            <li>
-                                <a href=""><img src="/Public/Home/images/view_list1.jpg" alt="" /></a>
-                            </li>
-                            <li>
-                                <a href=""><img src="/Public/Home/images/view_list2.jpg" alt="" /></a>
-                            </li>
-                            <li>
-                                <a href=""><img src="/Public/Home/images/view_list3.jpg" alt="" /></a>
-                            </li>
-                        </ul>
-                    </div>
-                </dd>
-            </dl>
-        </div>
-        <!-- 用户中心 end-->
 
         <!-- 购物车 start -->
         <div class="cart fl">
@@ -186,12 +138,11 @@
         <div class="navitems fl">
             <ul class="fl">
                 <li class="current"><a href="">首页</a></li>
-                <li><a href="">电脑频道</a></li>
-                <li><a href="">家用电器</a></li>
-                <li><a href="">品牌大全</a></li>
-                <li><a href="">团购</a></li>
-                <li><a href="">积分商城</a></li>
-                <li><a href="">夺宝奇兵</a></li>
+                <li><a href="">酒店长租</a></li>
+                <li><a href="">酒店短租</a></li>
+                <li><a href="">娱乐轰趴</a></li>
+                <li><a href="">豪宅别墅</a></li>
+                <li><a href="">城市商圈</a></li>
             </ul>
             <div class="right_corner fl"></div>
         </div>
@@ -707,7 +658,7 @@
             <a href="">移动终端</a> |
             <a href="">友情链接</a> |
             <a href="">销售联盟</a> |
-            <a href="">京西论坛</a>
+            <a href="">聚亿顺论坛</a>
         </p>
         <p class="copyright">
             © 2005-2013 京东网上商城 版权所有，并保留所有权利。 ICP备案证书号:京ICP证070359号
@@ -735,7 +686,7 @@
             if (data.login == 1)
                 var li = '您好，' + data.username + ' [<a href="<?php echo U('Member/logout'); ?>">退出</a>]';
             else
-                var li = '您好，欢迎来到京西！[<a href="<?php echo U('Member/login'); ?>">登录</a>] [<a href="<?php echo U(' Member / regist '); ?>">免费注册</a>]'
+                var li = '您好，欢迎来到聚亿顺！[<a href="<?php echo U('Member/login'); ?>">登录</a>] [<a href="<?php echo U(' Member / regist '); ?>">免费注册</a>]'
                 $("#logInfo").html(li);
         }
     });
