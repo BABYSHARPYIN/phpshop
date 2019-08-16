@@ -223,100 +223,7 @@
             <a href=""><img src="/Public/Home/images/ad.jpg" alt="" /></a>
         </div>
 
-        <div class="news mt10">
-            <h2><a href="">更多快报&nbsp;></a><strong>网站快报</strong></h2>
-            <ul>
-                <li class="odd"><a href="">电脑数码双11爆品抢不停</a></li>
-                <li><a href="">买茶叶送武夷山旅游大奖</a></li>
-                <li class="odd"><a href="">爆款手机最高直降1000</a></li>
-                <li><a href="">新鲜褚橙全面包邮开售！</a></li>
-                <li class="odd"><a href="">家具家装全场低至3折</a></li>
-                <li><a href="">买韩束，志玲邀您看电影</a></li>
-                <li class="odd"><a href="">美的先行惠双11快抢悦</a></li>
-                <li><a href="">享生活 疯狂周期购！</a></li>
-            </ul>
 
-        </div>
-
-        <div class="service mt10">
-            <h2>
-                <span class="title1 on"><a href="">话费</a></span>
-                <span><a href="">旅行</a></span>
-                <span><a href="">彩票</a></span>
-                <span class="title4"><a href="">游戏</a></span>
-            </h2>
-            <div class="service_wrap">
-                <!-- 话费 start -->
-                <div class="fare">
-                    <form action="">
-                        <ul>
-                            <li>
-                                <label for="">手机号：</label>
-                                <input type="text" name="phone" value="请输入手机号" class="phone" />
-                                <p class="msg">支持移动、联通、电信</p>
-                            </li>
-                            <li>
-                                <label for="">面值：</label>
-                                <select name="" id="">
-                  <option value="">10元</option>
-                  <option value="">20元</option>
-                  <option value="">30元</option>
-                  <option value="">50元</option>
-                  <option value="" selected>100元</option> 
-                  <option value="">200元</option>
-                  <option value="">300元</option>
-                  <option value="">400元</option>
-                  <option value="">500元</option>
-                </select>
-                                <strong>98.60-99.60</strong>
-                            </li>
-                            <li>
-                                <label for="">&nbsp;</label>
-                                <input type="submit" value="点击充值" class="fare_btn" /> <span><a href="">北京青春怒放独家套票</a></span>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-                <!-- 话费 start -->
-
-                <!-- 旅行 start -->
-                <div class="travel none">
-                    <ul>
-                        <li>
-                            <a href=""><img src="/Public/Home/images/holiday.jpg" alt="" /></a>
-                            <a href="" class="button">度假查询</a>
-                        </li>
-                        <li>
-                            <a href=""><img src="/Public/Home/images/scenic.jpg" alt="" /></a>
-                            <a href="" class="button">景点查询</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 旅行 end -->
-
-                <!-- 彩票 start -->
-                <div class="lottery none">
-                    <p><img src="/Public/Home/images/lottery.jpg" alt="" /></p>
-                </div>
-                <!-- 彩票 end -->
-
-                <!-- 游戏 start -->
-                <div class="game none">
-                    <ul>
-                        <li>
-                            <a href=""><img src="/Public/Home/images/sanguo.jpg" alt="" /></a>
-                        </li>
-                        <li>
-                            <a href=""><img src="/Public/Home/images/taohua.jpg" alt="" /></a>
-                        </li>
-                        <li>
-                            <a href=""><img src="/Public/Home/images/wulin.jpg" alt="" /></a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 游戏 end -->
-            </div>
-        </div>
 
     </div>
     <!-- 快报区域 end-->
@@ -423,23 +330,23 @@
                 <ul>
                     <li>
                         <dl>
-                            <dt><a href=""><img src="/Public/Home/images/guess1.jpg" alt="" /></a></dt>
-                            <dd><a href="">Thinkpad USB光电鼠标</a></dd>
-                            <dd><span>售价：</span><strong> ￥39.00</strong></dd>
+                            <dt><a href=""><img src="/Public\Home\images\index_slide2.jpg" alt="" /></a></dt>
+                            <dd><a href="">两室一厅豪华卧居</a></dd>
+                            <dd><span>售价：</span><strong> XXXX</strong></dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt><a href=""><img src="/Public/Home/images/guess2.jpg" alt="" /></a></dt>
-                            <dd><a href="">宜客莱（ECOLA）电脑散热器</a></dd>
-                            <dd><span>售价：</span><strong> ￥89.00</strong></dd>
+                            <dt><a href=""><img src="/Public\Home\images\index_slide2.jpg" alt="" /></a></dt>
+                            <dd><a href="">两室一厅豪华卧居</a></dd>
+                            <dd><span>售价：</span><strong>XXXX</strong></dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt><a href=""><img src="/Public/Home/images/guess3.jpg" alt="" /></a></dt>
-                            <dd><a href="">巴黎欧莱雅男士洁面膏 100ml</a></dd>
-                            <dd><span>售价：</span><strong> ￥30.00</strong></dd>
+                            <dt><a href=""><img src="/Public\Home\images\index_slide2.jpg" alt="" /></a></dt>
+                            <dd><a href="">两室一厅豪华卧居</a></dd>
+                            <dd><span>售价：</span><strong>XXXX</strong></dd>
                         </dl>
                     </li>
                 </ul>
@@ -453,7 +360,7 @@
 
     <!-- 侧栏 网站首发 start-->
     <div class="sidebar fl ml10">
-        <h2><strong>网站首发</strong></h2>
+        <h2><strong>特价优惠</strong></h2>
         <div class="sidebar_wrap">
             <dl class="first">
                 <dt class="fl"><a href=""><img src="/Public/Home/images/viewsonic.jpg" alt="" /></a></dt>
